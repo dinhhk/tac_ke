@@ -1,0 +1,299 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Import
+ *
+ * @ORM\Table(name="import")
+ * @ORM\Entity(repositoryClass="AdminBundle\Repository\ImportRepository")
+ */
+class Import
+{
+    /**
+     * @ORM\OneToMany(targetEntity="ImportDetail", mappedBy="import")
+     * @Assert\All({
+     *     @Assert\Type(type="AdminBundle\Entity\ImportDetail"),
+     * })
+     */
+    private $import_details;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Provider", inversedBy="imports")
+     * @ORM\JoinColumn(name="id_provider", referencedColumnName="id")
+     */
+    private $provider;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_order", type="datetime")
+     */
+    private $dateOrder;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total", type="float")
+     */
+    private $total;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment", type="string", length=200, nullable=true)
+     */
+    private $payment;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="string", length=500, nullable=true)
+     */
+    private $note;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dateOrder
+     *
+     * @param \DateTime $dateOrder
+     *
+     * @return Import
+     */
+    public function setDateOrder($dateOrder)
+    {
+        $this->dateOrder = $dateOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOrder
+     *
+     * @return \DateTime
+     */
+    public function getDateOrder()
+    {
+        return $this->dateOrder;
+    }
+
+    /**
+     * Set total
+     *
+     * @param float $total
+     *
+     * @return Import
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * Get total
+     *
+     * @return float
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param string $payment
+     *
+     * @return Import
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return string
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     *
+     * @return Import
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Import
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Import
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->import_details = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add importDetail
+     *
+     * @param \AdminBundle\Entity\ImportDetail $importDetail
+     *
+     * @return Import
+     */
+    public function addImportDetail(\AdminBundle\Entity\ImportDetail $importDetail)
+    {
+        $this->import_details[] = $importDetail;
+
+        return $this;
+    }
+
+    /**
+     * Remove importDetail
+     *
+     * @param \AdminBundle\Entity\ImportDetail $importDetail
+     */
+    public function removeImportDetail(\AdminBundle\Entity\ImportDetail $importDetail)
+    {
+        $this->import_details->removeElement($importDetail);
+    }
+
+    /**
+     * Get importDetails
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImportDetails()
+    {
+        return $this->import_details;
+    }
+
+    /**
+     * Set provider
+     *
+     * @param \AdminBundle\Entity\Provider $provider
+     *
+     * @return Import
+     */
+    public function setProvider(\AdminBundle\Entity\Provider $provider = null)
+    {
+        $this->provider = $provider;
+
+        return $this;
+    }
+
+    /**
+     * Get provider
+     *
+     * @return \AdminBundle\Entity\Provider
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+}

@@ -1,0 +1,24 @@
+import_index:
+    path:     /list
+    defaults: { _controller: "AdminBundle:Import:index" }
+    methods:  GET
+
+import_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Import:show" }
+    methods:  GET
+
+import_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:Import:new" }
+    methods:  [GET, POST]
+
+import_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdminBundle:Import:edit" }
+    methods:  [GET, POST]
+
+import_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdminBundle:Import:delete" }
+    methods:  [GET, DELETE]

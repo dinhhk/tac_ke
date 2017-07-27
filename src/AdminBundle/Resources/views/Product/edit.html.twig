@@ -1,0 +1,152 @@
+{% extends 'layoutAdminDefault.html.twig' %}
+{% block body %}
+    <section id="main-content">
+        <section class="wrapper"> 
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Product Edit
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+
+                                {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
+                                    {{ form_widget(edit_form._token) }}
+
+                                    <div class="form-group">
+                                        <label for="ctype" class="control-label col-lg-2">Type <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.type, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(edit_form.type) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="csize" class="control-label col-lg-2">Size <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.size, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(edit_form.size) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cunit" class="control-label col-lg-2">Unit <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.unit, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(edit_form.unit) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.name.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.name, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.name) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cimage" class="control-label col-lg-2">Image</label>
+                                        <div class="col-lg-10">
+                                            {% if(product.image is not empty) %}
+                                              <image height="25%" width="25%" id="product_image" src="{{ asset(product.image) }}" />
+                                              <a id="remove_product_image" data-id="{{ token }}" href="?token={{ token }}" style="vertical-align: bottom;">x</a>
+                                              {{ form_widget(edit_form.file, {'attr': {'class': 'hidden'}}) }}
+                                            {% else %}
+                                              {{ form_widget(edit_form.file) }}
+                                              <p class="help-block">Allowed types are "image/jpeg", "image/png".</p>
+                                              {{ form_errors(edit_form.file) }}
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cprice" class="control-label col-lg-2">Price <span class="required">*</span></label>
+                                        {% set _class = 'form-control number-input' %}
+                                        {% if not edit_form.price.vars.valid %}
+                                          {% set _class = 'form-control number-input error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.price, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.price) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cdescription" class="control-label col-lg-2">Description</label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.description, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input class="btn btn-primary" type="submit" value="Edit">
+                                            <a class="btn btn-default" href="{{ path('product_index') }}">Back to the list</a>
+                                        </div>
+                                    </div>
+                                {{ form_end(edit_form) }}
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).on('click', '#remove_product_image', function(e) {
+            e.preventDefault();
+            var token = $(this).data('id');
+            $.ajax({
+              url: "/admin/product/image/remove",
+              type: "POST",
+              data: { token : token },
+              success: function(data) {
+                if(data.removed == 1) {
+                  location.reload();
+                }
+              },
+              error: function (xhr, status, error) {
+                //console.log(xhr.responseText);
+              }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#admin_product_name').val(concatTypeSize());
+            $("#admin_product_type").change(function() {
+                $('#admin_product_name').val(concatTypeSize());
+            });
+
+            $("#admin_product_size").change(function() {
+                $('#admin_product_name').val(concatTypeSize());
+            });
+
+            $('.number-input').keyup(function(e) { 
+                var charCode = (e.which) ? e.which : e.keyCode;
+                if((e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) { 
+                    return;
+                } 
+                $('.number-input').val('');
+            });
+        });
+
+        function concatTypeSize() {
+            var size = $("#admin_product_size option:selected").text();
+            var type = $("#admin_product_type option:selected").text();
+            var type_size = type + ' ' + size;
+            
+            return type_size;
+        }
+    </script>
+{% endblock %}

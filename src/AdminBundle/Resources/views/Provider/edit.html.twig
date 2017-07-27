@@ -1,0 +1,72 @@
+{% extends 'layoutAdminDefault.html.twig' %}
+{% block body %}
+    <section id="main-content">
+        <section class="wrapper"> 
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Provider Edit
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+
+                                {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
+                                    {{ form_widget(edit_form._token) }}
+
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.name, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                                            {{ form_errors(edit_form.name) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cemail" class="control-label col-lg-2">Email <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.email, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                                            {{ form_errors(edit_form.email) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="caddress" class="control-label col-lg-2">Address <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.address, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                                            {{ form_errors(edit_form.address) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cphonenumber" class="control-label col-lg-2">Phone number <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                                            {{ form_errors(edit_form.phoneNumber) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cnote" class="control-label col-lg-2">Note</label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.note, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input class="btn btn-primary" type="submit" value="Create">
+                                            <a class="btn btn-default" href="{{ path('provider_index') }}">Back to the list</a>
+                                        </div>
+                                    </div>
+                                {{ form_end(edit_form) }}
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}
+

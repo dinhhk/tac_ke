@@ -1,0 +1,27 @@
+services:
+    authentication.handler.login_success_handler:
+        class:  AdminBundle\Security\LoginSuccessHandler
+        arguments:  ['@router', '@security.authorization_checker']
+
+    admin.service.algorithmic_helper:
+        class: AdminBundle\Services\AlgorithmicHelper
+        arguments:  ["@doctrine.orm.entity_manager"]
+
+    admin.twig.generate_id:
+      class: AdminBundle\Twig\GenerateIdExtension
+      tags:
+        - { name: twig.extension }
+
+    admin.listener.core_listener:
+        class: AdminBundle\EventListener\CoreListener
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+            - { name: doctrine.event_listener, event: postRemove, method: postRemove }
+            
+
+    # admin.listener.import_listener:
+    #     class: AdminBundle\EventListener\ImportListener
+    #     arguments: ["@service_container"]
+    #     tags:
+    #         - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }

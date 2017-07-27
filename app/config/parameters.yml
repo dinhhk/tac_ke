@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: tac_ke
+    database_user: root
+    database_password: root
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: no-reply@mailinator.com
+    mailer_password: null
+    secret: 98b43ea6a67e8d6907954a445668ddc625fd57e1

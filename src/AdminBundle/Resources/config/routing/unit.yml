@@ -1,0 +1,24 @@
+unit_index:
+    path:     /list
+    defaults: { _controller: "AdminBundle:Unit:index" }
+    methods:  GET
+
+unit_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Unit:show" }
+    methods:  GET
+
+unit_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:Unit:new" }
+    methods:  [GET, POST]
+
+unit_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdminBundle:Unit:edit" }
+    methods:  [GET, POST]
+
+unit_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdminBundle:Unit:delete" }
+    methods:  [GET, DELETE]

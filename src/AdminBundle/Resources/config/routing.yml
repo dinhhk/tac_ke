@@ -1,0 +1,39 @@
+admin:
+    path:     /admin
+    defaults: { _controller: AdminBundle:Dashboard:index }
+
+admin_login:
+    path:     /login
+    defaults: { _controller: AdminBundle:Security:login }
+
+admin_type:
+    resource: "@AdminBundle/Resources/config/routing/type.yml"
+    prefix: /admin/type
+
+admin_size:
+    resource: "@AdminBundle/Resources/config/routing/size.yml"
+    prefix:   /admin/size
+
+admin_unit:
+    resource: "@AdminBundle/Resources/config/routing/unit.yml"
+    prefix:   /admin/unit
+
+admin_product:
+    resource: "@AdminBundle/Resources/config/routing/product.yml"
+    prefix:   /admin/product
+
+admin_customer:
+    resource: "@AdminBundle/Resources/config/routing/customer.yml"
+    prefix:   /admin/customer
+
+admin_provider:
+    resource: "@AdminBundle/Resources/config/routing/provider.yml"
+    prefix:   /admin/provider
+
+admin_import:
+    resource: "@AdminBundle/Resources/config/routing/import.yml"
+    prefix:   /admin/import
+
+admin_import_detail:
+    resource: "@AdminBundle/Resources/config/routing/import_detail.yml"
+    prefix:   /admin/import_detail

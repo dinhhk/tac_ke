@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Importdetails list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>Unitprice</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for importDetail in importDetails %}
+            <tr>
+                <td><a href="{{ path('import_detail_show', { 'id': importDetail.id }) }}">{{ importDetail.id }}</a></td>
+                <td>{{ importDetail.quantity }}</td>
+                <td>{{ importDetail.unitPrice }}</td>
+                <td>{% if importDetail.createdAt %}{{ importDetail.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if importDetail.updatedAt %}{{ importDetail.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('import_detail_show', { 'id': importDetail.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('import_detail_edit', { 'id': importDetail.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('import_detail_new') }}">Create a new importDetail</a>
+        </li>
+    </ul>
+{% endblock %}

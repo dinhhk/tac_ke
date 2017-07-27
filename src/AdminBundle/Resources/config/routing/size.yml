@@ -1,0 +1,24 @@
+size_index:
+    path:     /list
+    defaults: { _controller: "AdminBundle:Size:index" }
+    methods:  GET
+
+size_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Size:show" }
+    methods:  GET
+
+size_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:Size:new" }
+    methods:  [GET, POST]
+
+size_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdminBundle:Size:edit" }
+    methods:  [GET, POST]
+
+size_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdminBundle:Size:delete" }
+    methods:  [GET, DELETE]

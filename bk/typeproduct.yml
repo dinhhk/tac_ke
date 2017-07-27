@@ -1,0 +1,24 @@
+type_product_index:
+    path:     /list
+    defaults: { _controller: "AdminBundle:TypeProduct:index" }
+    methods:  GET
+
+type_product_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:TypeProduct:show" }
+    methods:  GET
+
+type_product_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:TypeProduct:new" }
+    methods:  [GET, POST]
+
+type_product_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdminBundle:TypeProduct:edit" }
+    methods:  [GET, POST]
+
+type_product_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdminBundle:TypeProduct:delete" }
+    methods:  DELETE
