@@ -10,4 +10,24 @@ namespace AdminBundle\Repository;
  */
 class BillDetailRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getTotalQuantityByDateProductId($date, $id_product) {
+		$results = array();
+		if($date && $id_product) {
+			$query = $this->createQueryBuilder('bd')
+	            ->select('SUM(bd.quantity) as total_quantity')
+	            ->where('bd.createdAt > :date')
+	            ->andwhere('bd.product = :id_product')
+	            ->setParameters(
+	            	array(
+	            		':date' => $date,
+	            		':id_product' => $id_product,
+	            	)
+	            )
+	            ->getQuery();
+
+	        $results = $query->getSingleScalarResult();	
+		}
+		
+        return $results;
+	}
 }

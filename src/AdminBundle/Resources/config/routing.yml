@@ -37,3 +37,11 @@ admin_import:
 admin_import_detail:
     resource: "@AdminBundle/Resources/config/routing/import_detail.yml"
     prefix:   /admin/import_detail
+
+admin_bill:
+    resource: "@AdminBundle/Resources/config/routing/bill.yml"
+    prefix:   /admin/bill
+
+admin_bill_detail:
+    resource: "@AdminBundle/Resources/config/routing/bill_detail.yml"
+    prefix:   /admin/bill_detail

@@ -3,18 +3,21 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BillDetail
  *
  * @ORM\Table(name="bill_detail")
  * @ORM\Entity(repositoryClass="AdminBundle\Repository\BillDetailRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class BillDetail
 {
     /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="bill_details")
      * @ORM\JoinColumn(name="id_product", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $product;
 
@@ -37,6 +40,7 @@ class BillDetail
      * @var float
      *
      * @ORM\Column(name="quantity", type="float")
+     * @Assert\NotBlank()
      */
     private $quantity;
 
@@ -44,6 +48,7 @@ class BillDetail
      * @var float
      *
      * @ORM\Column(name="unit_price", type="float")
+     * @Assert\NotBlank()
      */
     private $unitPrice;
 
@@ -214,5 +219,22 @@ class BillDetail
     public function getBill()
     {
         return $this->bill;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

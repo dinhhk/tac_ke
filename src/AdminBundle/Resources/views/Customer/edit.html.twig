@@ -1,21 +1,99 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'layoutAdminDefault.html.twig' %}
 {% block body %}
-    <h1>Customer edit</h1>
+    <section id="main-content">
+        <section class="wrapper"> 
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Customer Edit
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+                                {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
+                                    {{ form_widget(edit_form._token) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('customer_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.name.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.name, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.name) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cgender" class="control-label col-lg-2">Gender <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.gender.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.gender, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.gender) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cemail" class="control-label col-lg-2">Email <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.email.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.email, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.email) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="caddress" class="control-label col-lg-2">Address <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.address.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.address, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.address) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cphone" class="control-label col-lg-2">Phone Number <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.phoneNumber.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.phoneNumber, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(edit_form.phoneNumber) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cnote" class="control-label col-lg-2">Note</label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(edit_form.note, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input class="btn btn-primary" type="submit" value="Update">
+                                            <a class="btn btn-default" href="{{ path('customer_index') }}">Back to the list</a>
+                                        </div>
+                                    </div>
+                                {{ form_end(edit_form) }}
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
 {% endblock %}

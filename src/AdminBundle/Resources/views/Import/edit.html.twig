@@ -21,7 +21,7 @@
                                                 {% if not edit_form.provider.vars.valid %}
                                                     {% set _class = 'form-control error' %}
                                                 {% endif %}
-                                                {{ form_widget(edit_form.provider, {'attr': {'class': _class}}) }}
+                                                {{ form_widget(edit_form.provider, {'attr': {'class': _class, 'disabled': 'disabled'}}) }}
                                                 <div class="input-group-addon">
                                                     <span class="fa fa-plus"></span>
                                                 </div>
@@ -281,8 +281,8 @@
             event.preventDefault();         
             var tr = $(this).closest('tr');
             var product_id = parseInt(tr.find('.product-name').attr('data-product-id'));
-            var quantity = parseInt(tr.find('.quantity').text());
-            var unitPrice = parseInt(tr.find('.unit-price').text());
+            var quantity = parseInt(tr.find('.quantity').text().replace(/\s/g, "").replace(",", ""));
+            var unitPrice = parseInt(tr.find('.unit-price').text().replace(/\s/g, "").replace(",", ""));
             
             $('#admin_import_import_details___name___quantity').val(quantity);
             $('#admin_import_import_details___name___unitPrice').val(unitPrice);

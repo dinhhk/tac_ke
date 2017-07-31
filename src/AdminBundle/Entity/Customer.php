@@ -3,12 +3,16 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Customer
  *
  * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="AdminBundle\Repository\CustomerRepository")
+ * @UniqueEntity("email")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Customer
 {
@@ -30,6 +34,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -37,6 +42,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="gender", type="string", length=10)
+     * @Assert\NotBlank()
      */
     private $gender;
 
@@ -44,13 +50,19 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=20)
+     * @ORM\Column(name="address", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $address;
 
@@ -58,6 +70,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="phone_number", type="string", length=20)
+     * @Assert\NotBlank()
      */
     private $phoneNumber;
 
@@ -324,5 +337,22 @@ class Customer
     public function getBills()
     {
         return $this->bills;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

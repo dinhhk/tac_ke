@@ -42,7 +42,11 @@ class CustomerController extends Controller
             $em->persist($customer);
             $em->flush();
 
-            return $this->redirectToRoute('customer_edit', array('id' => $customer->getId()));
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A customer have added successfully.');
+
+            return $this->redirectToRoute('customer_index');
         }
 
         return $this->render('AdminBundle:Customer:new.html.twig', array(
@@ -78,6 +82,10 @@ class CustomerController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A customer have updated successfully.');
+
             return $this->redirectToRoute('customer_index');
         }
 
@@ -94,15 +102,28 @@ class CustomerController extends Controller
      */
     public function deleteAction(Request $request, Customer $customer)
     {
+        $em = $this->getDoctrine()->getManager();
         $form = $this->createDeleteForm($customer);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        if($request->getMethod() == 'DELETE') {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->remove($customer);
+                $em->flush();
+
+                $request->getSession()
+                    ->getFlashBag()
+                    ->add('success', 'A customer have deleted successfully.');
+            }
+        } else {
             $em->remove($customer);
             $em->flush();
-        }
 
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A product have deleted successfully.');
+        }
+        
         return $this->redirectToRoute('customer_index');
     }
 

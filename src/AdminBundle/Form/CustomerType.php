@@ -5,6 +5,8 @@ namespace AdminBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CustomerType extends AbstractType
 {
@@ -13,7 +15,18 @@ class CustomerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('gender')->add('email')->add('address')->add('phoneNumber')->add('note')->add('createdAt')->add('updatedAt');
+        $builder
+            ->add('name')
+            ->add('gender', ChoiceType::class, array(
+                    'choices'  => array(
+                        'Male' => true,
+                        'Female' => false,
+                    ))
+                )
+            ->add('email')
+            ->add('address')
+            ->add('phoneNumber')
+            ->add('note', TextareaType::class);
     }
     
     /**

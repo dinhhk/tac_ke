@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class ImportDetailType extends AbstractType
+class BillDetailType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class ImportDetailType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AdminBundle\Entity\ImportDetail'
+            'data_class' => 'AdminBundle\Entity\BillDetail'
         ));
     }
 
@@ -43,11 +43,14 @@ class ImportDetailType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'admin_import_detail';
+        return 'admin_bill_detail';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
-        return 'admin_import_detail';
+        return 'admin_bill_detail';
     }
 }

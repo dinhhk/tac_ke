@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bill</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bill.id }}</td>
+            </tr>
+            <tr>
+                <th>Dateorder</th>
+                <td>{% if bill.dateOrder %}{{ bill.dateOrder|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ bill.total }}</td>
+            </tr>
+            <tr>
+                <th>Payment</th>
+                <td>{{ bill.payment }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ bill.note }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if bill.createdAt %}{{ bill.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if bill.updatedAt %}{{ bill.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_bill_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_bill_edit', { 'id': bill.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

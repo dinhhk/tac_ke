@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Billdetails list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>Unitprice</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for billDetail in billDetails %}
+            <tr>
+                <td><a href="{{ path('billdetail_show', { 'id': billDetail.id }) }}">{{ billDetail.id }}</a></td>
+                <td>{{ billDetail.quantity }}</td>
+                <td>{{ billDetail.unitPrice }}</td>
+                <td>{% if billDetail.createdAt %}{{ billDetail.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if billDetail.updatedAt %}{{ billDetail.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('billdetail_show', { 'id': billDetail.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('billdetail_edit', { 'id': billDetail.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('billdetail_new') }}">Create a new billDetail</a>
+        </li>
+    </ul>
+{% endblock %}

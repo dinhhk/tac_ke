@@ -1,16 +1,99 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'layoutAdminDefault.html.twig' %}
 {% block body %}
-    <h1>Customer creation</h1>
+    <section id="main-content">
+        <section class="wrapper"> 
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Customer Creation
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+                                {{ form_start(form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
+                                    {{ form_widget(form._token) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('customer_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not form.name.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.name, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(form.name) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cgender" class="control-label col-lg-2">Gender <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not form.gender.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.gender, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(form.gender) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cemail" class="control-label col-lg-2">Email <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not form.email.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.email, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(form.email) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="caddress" class="control-label col-lg-2">Address <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not form.address.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.address, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(form.address) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cphone" class="control-label col-lg-2">Phone Number <span class="required">*</span></label>
+                                        {% set _class = 'form-control' %}
+                                        {% if not form.phoneNumber.vars.valid %}
+                                          {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.phoneNumber, {'attr': {'class': _class}}) }}
+                                            {{ form_errors(form.phoneNumber) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cnote" class="control-label col-lg-2">Note</label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.note, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <input class="btn btn-primary" type="submit" value="Create">
+                                            <a class="btn btn-default" href="{{ path('customer_index') }}">Back to the list</a>
+                                        </div>
+                                    </div>
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
 {% endblock %}

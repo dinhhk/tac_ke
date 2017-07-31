@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Billdetail</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ billDetail.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ billDetail.quantity }}</td>
+            </tr>
+            <tr>
+                <th>Unitprice</th>
+                <td>{{ billDetail.unitPrice }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if billDetail.createdAt %}{{ billDetail.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if billDetail.updatedAt %}{{ billDetail.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('billdetail_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('billdetail_edit', { 'id': billDetail.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

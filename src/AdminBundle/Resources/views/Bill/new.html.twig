@@ -6,92 +6,93 @@
             <div class="col-lg-12">
                 <section class="panel panel-default" style='margin-bottom: 0px'>
                     <header class="panel-heading">
-                        Import Creation
+                        Bill Creation
                     </header>
                     <div class="panel-body">
+
                         {{ form_start(form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-9 col-md-9 col-sm-9">
                                         <div class="col-md-6">
-                                            {{ form_label(form.provider, 'Provider') }}
+                                            {{ form_label(form.customer, 'Customer') }}
                                             
                                             <div class="input-group">
                                                 {% set _class = 'form-control' %}
-                                                {% if not form.provider.vars.valid %}
+                                                {% if not form.customer.vars.valid %}
                                                     {% set _class = 'form-control error' %}
                                                 {% endif %}
-                                                {{ form_widget(form.provider, {'attr': {'class': _class}}) }}
+                                                {{ form_widget(form.customer, {'attr': {'class': _class}}) }}
                                                 <div class="input-group-addon">
                                                     <span class="fa fa-plus"></span>
                                                 </div>
                                             </div>
 
-                                            {{ form_errors(form.provider) }}
+                                            {{ form_errors(form.customer) }}
                                         </div>
 
                                         <div class="col-md-6">
-                                            {{ form_label(form.import_details.vars.prototype.product, 'Product') }}
+                                            {{ form_label(form.bill_details.vars.prototype.product, 'Product') }}
                                             
                                             <div class="input-group">
                                                 {% set _class = 'form-control' %}
-                                                {% if form.import_details.__name__.product.vars.valid is defined and form.import_details.__name__.product.vars.valid == FALSE %}
+                                                {% if form.bill_details.__name__.product.vars.valid is defined and form.bill_details.__name__.product.vars.valid == FALSE %}
                                                     {% set _class = 'form-control error' %}
                                                 {% endif %}
-                                                {% if form.import_details.children.__name__.product is defined %}
-                                                    {{ form_widget(form.import_details.children.__name__.product, {'attr': {'class': _class}}) }}
+                                                {% if form.bill_details.children.__name__.product is defined %}
+                                                    {{ form_widget(form.bill_details.children.__name__.product, {'attr': {'class': _class}}) }}
                                                 {% else %}
-                                                    {{ form_widget(form.import_details.vars.prototype.product, {'attr': {'class': _class}}) }}
+                                                    {{ form_widget(form.bill_details.vars.prototype.product, {'attr': {'class': _class}}) }}
                                                 {% endif %}
                                                 <div class="input-group-addon">
                                                     <span class="fa fa-plus"></span>
                                                 </div>
                                             </div>
 
-                                            {% if form.import_details.__name__.product is defined %}
-                                                {{ form_errors(form.import_details.__name__.product) }} 
+                                            {% if form.bill_details.__name__.product is defined %}
+                                                {{ form_errors(form.bill_details.__name__.product) }} 
                                             {% endif %}
                                         </div>
 
                                         <div class="col-md-4">
-                                            {{ form_label(form.import_details.vars.prototype.quantity, 'Quantity') }}
+                                            {{ form_label(form.bill_details.vars.prototype.quantity, 'Quantity') }}
 
                                             {% set _class = 'form-control number-input quantity' %}
-                                            {% if form.import_details.__name__.quantity.vars.valid is defined and form.import_details.__name__.quantity.vars.valid == FALSE %}
+                                            {% if form.bill_details.__name__.quantity.vars.valid is defined and form.bill_details.__name__.quantity.vars.valid == FALSE %}
                                                 {% set _class = 'form-control number-input quantity error' %}
                                             {% endif %}
-                                            {% if form.import_details.children.__name__.quantity is defined %}
-                                                {{ form_widget(form.import_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
+                                            {% if form.bill_details.children.__name__.quantity is defined %}
+                                                {{ form_widget(form.bill_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
                                             {% else %}
-                                                {{ form_widget(form.import_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
+                                                {{ form_widget(form.bill_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
                                             {% endif %}
 
-                                            {% if form.import_details.__name__.quantity is defined %}
-                                                {{ form_errors(form.import_details.__name__.quantity) }} 
+                                            {% if form.bill_details.__name__.quantity is defined %}
+                                                {{ form_errors(form.bill_details.__name__.quantity) }} 
                                             {% endif %}
                                         </div>
                                         
                                         <div class="col-md-4">
-                                            {{ form_label(form.import_details.vars.prototype.unitPrice, 'Unit Price') }}
+                                            {{ form_label(form.bill_details.vars.prototype.unitPrice, 'Unit Price') }}
                                             
                                             {% set _class = 'form-control number-input unit-price' %}
-                                            {% if form.import_details.__name__.unitPrice.vars.valid is defined and form.import_details.__name__.unitPrice.vars.valid == FALSE %}
+                                            {% if form.bill_details.__name__.unitPrice.vars.valid is defined and form.bill_details.__name__.unitPrice.vars.valid == FALSE %}
                                                 {% set _class = 'form-control number-input unit-price error' %}
                                             {% endif %}
-                                            {% if form.import_details.children.__name__.unitPrice is defined %}
-                                                {{ form_widget(form.import_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
+                                            {% if form.bill_details.children.__name__.unitPrice is defined %}
+                                                {{ form_widget(form.bill_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
                                             {% else %}
-                                                {{ form_widget(form.import_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
+                                                {{ form_widget(form.bill_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
                                             {% endif %}
                                             
-                                            {% if form.import_details.__name__.unitPrice is defined %}
-                                                {{ form_errors(form.import_details.__name__.unitPrice) }} 
+                                            {% if form.bill_details.__name__.unitPrice is defined %}
+                                                {{ form_errors(form.bill_details.__name__.unitPrice) }} 
                                             {% endif %}
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label for="admin_import_price">Total</label>
-                                            <input id="admin_import_price" name="admin_import_price" class="form-control" type="text" readonly="readonly">
+                                            <label for="admin_bill_price">Total</label>
+                                            <input id="admin_bill_price" name="admin_bill_price" class="form-control" type="text" readonly="readonly">
                                         </div>
 
                                         <div class="col-md-6">
@@ -128,11 +129,12 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <input class="btn btn-primary" type="submit" value="Create">
-                                    <a class="btn btn-default" href="{{ path('import_index') }}">Back to the list</a>
+                                    <a class="btn btn-default" href="{{ path('bill_index') }}">Back to the list</a>
                                 </div>
                             </div>
-                            {{ form_widget(form.import_details, {'attr': {'class': 'hidden'}}) }}
-                        {{ form_end(form) }}  
+                            {{ form_widget(form.bill_details, {'attr': {'class': 'hidden'}}) }}
+                        {{ form_end(form) }} 
+
                     </div>
                 </section>
             </div>
@@ -147,12 +149,12 @@
         addImageByAjax();
     });
 
-    $( "#admin_import_import_details___name___product" ).change(function() {
+    $( "#admin_bill_bill_details___name___product" ).change(function() {
         addImageByAjax();
     });
 
     function addImageByAjax() {
-        var id = $("#admin_import_import_details___name___product option:selected").val();
+        var id = $("#admin_bill_bill_details___name___product option:selected").val();
         $.ajax({
             url: "/admin/product/info",
             type: "POST",
@@ -181,20 +183,20 @@
 
         $('.number-input.quantity').keyup(function(e) { 
             if(e.keyCode == 9 || (e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) { 
-                $('#admin_import_price').val(calculatePrice());
+                $('#admin_bill_price').val(calculatePrice());
                 return;
             }
             $('.number-input.quantity').val('');
-            $('#admin_import_price').val(calculatePrice());
+            $('#admin_bill_price').val(calculatePrice());
         });
 
         $('.number-input.unit-price').keyup(function(e) { 
             if(e.keyCode == 9 || (e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) { 
-                $('#admin_import_price').val(calculatePrice());
+                $('#admin_bill_price').val(calculatePrice());
                 return;
             }
             $('.number-input.unit-price').val('');
-            $('#admin_import_price').val(calculatePrice());
+            $('#admin_bill_price').val(calculatePrice());
         });
     });
 

@@ -1,0 +1,24 @@
+bill_index:
+    path:     /list
+    defaults: { _controller: "AdminBundle:Bill:index" }
+    methods:  GET
+
+bill_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Bill:show" }
+    methods:  GET
+
+bill_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:Bill:new" }
+    methods:  [GET, POST]
+
+bill_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdminBundle:Bill:edit" }
+    methods:  [GET, POST]
+
+bill_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdminBundle:Bill:delete" }
+    methods:  DELETE
