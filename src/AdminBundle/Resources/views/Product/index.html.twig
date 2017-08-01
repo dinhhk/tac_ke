@@ -1,15 +1,29 @@
 {% extends 'layoutAdminDefault.html.twig' %}
-{% block body %}
-    <section id="main-content">
-        <section class="wrapper"> 
-            {% include 'partials/admin/messages.html.twig' %}
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            Product List
-                        </header>
-                        <table class="table table-striped table-advance table-hover">
+{% block content_app_body %}
+    <div class="app-body">
+        <div class="magic-layout">
+            <div id="panel" class="panel panel-default magic-element width-full">
+                <div class="panel-heading">
+                    <div class="panel-icon"><i class="icon ion-ios7-photos-outline"></i></div>
+                    <div class="panel-actions">
+                        <a role="button" data-refresh="#panel" title="refresh" class="btn btn-sm btn-icon">
+                            <i class="icon ion-refresh"></i>
+                        </a>
+                        <a role="button" data-expand="#panel" title="expand" class="btn btn-sm btn-icon">
+                            <i class="icon ion-arrow-resize"></i>
+                        </a>
+                        <a role="button" data-collapse="#panel" title="collapse" class="btn btn-sm btn-icon">
+                            <i class="icon ion-chevron-down"></i>
+                        </a>
+                        <a role="button" data-close="#panel" title="close" class="btn btn-sm btn-icon">
+                            <i class="icon ion-close-round"></i>
+                        </a>
+                    </div><!-- /panel-actions -->
+                    <h3 class="panel-title">Product list</h3>
+                </div><!-- /panel-heading -->
+                <div class="table-responsive">
+                    <table class="table table-hover datatables">
+                        <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Image</th>
@@ -20,6 +34,8 @@
                                 <th>Unit</th> 
                                 <th>Actions</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             {% set count = 0 %}
                             {% for product in products %}
                                 {% set count = count + 1 %}
@@ -37,21 +53,25 @@
                                     <td>{{ product.unit.name }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn btn-primary" href="{{ path('product_new') }}"><i class="icon_plus_alt2"></i></a>
-                                            <a class="btn btn-success" href="{{ path('product_edit', { 'id': product.id }) }}"><i class="icon_check_alt2"></i></a>
-                                            <a href="{{ path('product_delete', {'id': product.id }) }}" onclick="confirm('Are you sure?');" class="btn btn-danger btn-delete"><i class="icon_close_alt2"></i></a>
+                                            <a class="btn btn-ion btn-primary" href="{{ path('product_new') }}">Add</a>
+                                            <a class="btn btn-ion btn-success" href="{{ path('product_edit', { 'id': product.id }) }}">Edit</a>
+                                            <a href="{{ path('product_delete', {'id': product.id }) }}" onclick="confirm('Are you sure?');" class="btn btn-danger btn-ion  btn-delete">Delete</a>
                                         </div>
                                     </td>
                                 </tr>
                             {% endfor %}
 
-                        </table>
-                    </section>
+                        </tbody>
+                    </table>
                     {% if(products|length == 0) %}
-                    <a class="btn btn-primary" href="{{ path('product_new') }}">Add New</a>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a class="btn btn-primary" href="{{ path('product_new') }}">Add New</a>
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
-            </div> 
-        </section>
-    </section>
+            </div><!-- /panel -->
+        </div>
+    </div><!-- /app body -->
 {% endblock %}

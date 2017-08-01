@@ -1,5 +1,5 @@
-admin:
-    path:     /admin
+admi_dashboard:
+    path:     /admin/dashboard
     defaults: { _controller: AdminBundle:Dashboard:index }
 
 admin_login:
