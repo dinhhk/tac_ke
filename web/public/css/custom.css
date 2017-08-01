@@ -1,0 +1,17 @@
+.fix-gutters > [class*="col-"],
+.fix-gutters-six > [class*="col-md-6"] {
+ 	padding-right: 15;
+  	padding-left: 15;
+}
+
+tr.table-hover-highlighted td {
+    background: #F5F5F5;
+}
+
+.btn-delete {
+	margin-right: 2px;
+}
+
+.form-validate .form-group .error{
+    border-color: #e74c3c !important;
+}
