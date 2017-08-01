@@ -1,0 +1,179 @@
+<!-- side body -->
+<div class="side-body">
+    <!-- this you can place your search result with ajax -->
+    <div class="side-wrapper side-wrapper-large">
+        <div class="side-wrapper-status lead">No result, please start typing!</div>
+        <div class="side-wrapper-result">
+            <!-- just sample result -->
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar1.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Post title <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar2.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Username <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar3.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Item name <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar4.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Other result <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar5.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Something else <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar1.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Post title <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar2.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Username <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+
+            <div class="panel panel-default bordered-none no-radius">
+                <a href="#" class="panel-body-heading full-line">
+                    <div class="pb-object pb-object-circle pb-object-sm">
+                        <img src="{{ asset('public/assets/app/img/avatar3.png') }}" alt="">
+                    </div><!-- /pb-object -->
+                    <h3 class="pb-title pb-title-sm">
+                        Item name <small>Lorem ipsum dolor sit amet, consectetur</small>
+                    </h3><!-- /pb-title -->
+                </a><!-- /panel-body-heading -->
+            </div><!-- /panel -->
+        </div><!-- /side-wrapper-result -->
+    </div><!-- /side wrapper -->
+
+    <!-- separate nav for ease development -->
+    <nav class="side-nav">
+        <!-- open nav ul -->
+        <ul>
+            <li class="side-nav-item active">
+                <a href="index.html">
+                    <i class="nav-item-icon icon ion-social-rss-outline"></i>
+                    Dashboard
+                </a>
+            </li><!-- /coverage -->
+
+            <li class="side-nav-item">
+                <a href="{{ path('customer_index') }}">
+                    <i class="nav-item-icon icon ion-ios7-people-outline"></i>
+                    Customer
+                </a>
+            </li><!-- /Customer -->
+
+            <li class="side-nav-item">
+                <a href="{{ path('provider_index') }}">
+                    <i class="nav-item-icon icon ion-social-designernews"></i>
+                    Provider
+                </a>
+            </li><!-- /Provider -->
+
+            <li class="side-nav-item">
+                <a href="{{ path('size_index') }}">
+                    <i class="nav-item-icon icon ion-ios7-download-outline"></i>
+                    Import
+                </a>
+            </li><!-- /Import -->
+
+            <li class="side-nav-item">
+                <a href="{{ path('size_index') }}">
+                    <i class="nav-item-icon icon ion-ios7-upload-outline"></i>
+                    Bill
+                </a>
+            </li><!-- /Bill -->
+
+            <li class="side-nav-item">
+                <a href="#products">
+                    <i class="nav-item-caret"></i>
+                    <i class="nav-item-icon icon ion-ios7-cog-outline"></i>
+                    Products
+                </a>
+                <ul id="products" class="side-nav-child">
+                    <li class="side-nav-item-heading">
+                        <a href="#" class="side-nav-back">
+                            <i class="nav-item-caret"></i>
+                            Products
+                        </a>
+                    </li><!-- /header products child -->
+                    <li class="side-nav-item">
+                        <a href="{{ path('product_index') }}">
+                            <i class="nav-item-icon icon ion-ios7-cog-outline"></i>
+                            Product
+                        </a>
+                    </li><!-- /product -->
+                    <li class="side-nav-item">
+                        <a href="{{ path('size_index') }}">
+                            <i class="nav-item-icon icon ion-arrow-expand"></i>
+                            Size
+                        </a>
+                    </li><!-- /size -->
+                    <li class="side-nav-item">
+                        <a href="{{ path('type_index') }}">
+                            <i class="nav-item-icon icon ion-social-buffer-outline"></i>
+                            Type
+                        </a>
+                    </li><!-- /type -->
+                    <li class="side-nav-item">
+                        <a href="{{ path('unit_index') }}">
+                            <i class="nav-item-icon icon ion-social-bitcoin-outline"></i>
+                            Unit
+                        </a>
+                    </li><!-- /unit -->
+                </ul><!-- /product child -->
+            </li><!-- /products -->
+        </ul><!-- /nav ul-->
+    </nav>
+</div>
+<!-- /side body -->

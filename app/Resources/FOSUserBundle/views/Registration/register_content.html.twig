@@ -1,26 +1,52 @@
 {% trans_default_domain 'FOSUserBundle' %}
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'login-form'}}) }}
-	<div class="login-wrap">
-		<p class="login-img"><i class="icon_lock_alt"></i></p>
-		<div class="input-group">
-          	<span class="input-group-addon"><i class="icon_mail"></i></span>
-          	{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
-        </div>
-		<div class="input-group">
-          	<span class="input-group-addon"><i class="icon_profile"></i></span>
-          	{{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Username'}}) }}
-        </div>
-        <div class="input-group">
-        	<span class="input-group-addon"><i class="icon_key_alt"></i></span>
-        	{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
-        </div>
-        <div class="input-group">
-        	<span class="input-group-addon"><i class="icon_key_alt"></i></span>
-        	{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
-        </div>
-		{{ form_widget(form._token) }}
-	    <div>
-	        <input class="btn btn-primary btn-lg btn-block" type="submit" value="{{ 'registration.submit'|trans }}" />
-	    </div>
-	</div>
-{{ form_end(form) }}
+<section id="signup" class="sign-wrapper signup transition-layout">
+    <div class="row">
+        <div class="col-md-offset-4 col-sm-offset-0 col-xs-offset-0 col-md-4 col-sm-12 col-xs-12">
+            <div class="sign-brand">
+                <div class="sign-brand-logo">
+                    <img src="{{ asset('public/assets/app/img/brand-md.png') }}" alt="Brand"/>
+                </div>
+                <h1 class="sign-brand-name">Sign Up</h1>
+            </div><!-- /sign-brand -->
+            <div class="sign-container">
+                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'login-form', 'novalidation': 'novalidation'}}) }}
+                    {% set _class = 'form-group' %}
+                    {% if not form.username.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Username'}}) }}
+                        {{ form_errors(form.username) }}
+                    </div><!-- /form-group -->
+                    <div class="form-group">
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                    </div><!-- /form-group -->
+                    {% set _class = 'form-group' %}
+                    {% if not form.plainPassword.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div><!-- /form-group -->
+                    {% set _class = 'form-group' %}
+                    {% if not form.plainPassword.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Repeat password'}}) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div><!-- /form-group -->
+                    {{ form_widget(form._token) }}
+                    <div class="form-group">
+                        <input class="btn btn-success btn-block" type="submit" value="{{ 'registration.submit'|trans }}" />
+                    </div><!-- /form-group -->
+                {{ form_end(form) }}
+            </div><!-- /sign-container -->
+        </div><!-- /col -->
+    </div><!-- /row -->
+
+    <div class="sign-footer">
+        <a href="{{ path('fos_user_security_login') }}" class="btn btn-link text-inverse">Already have an account</a>
+    </div><!-- /sign-footer -->
+</section><!-- /signup -->
