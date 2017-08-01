@@ -1,72 +1,92 @@
 {% extends 'layoutAdminDefault.html.twig' %}
-{% block body %}
-    <section id="main-content">
-        <section class="wrapper"> 
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            Provider Edit
-                        </header>
-                        <div class="panel-body">
-                            <div class="form">
+{% block content_app_body %}
+    <div class="app-body">
+        <div class="magic-layout">
+            <div class="box magic-element width-full">
+                <h2 class="box-heading">
+                    <div class="btn-group pull-right">
+                        <a href="#" role="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon ion-ios7-arrow-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="form-theme" data-toggle="default" href="#">Default</a></li>
+                            <li><a class="form-theme" data-toggle="flat" href="#">Flat</a></li>
+                            <li><a class="form-theme" data-toggle="ion" href="#">Ion</a></li>
+                            <li class="divider"></li>
+                            <li><a class="form-theme" data-toggle="flat-ion" href="#">Flat & Ion</a></li>
+                            <li class="divider"></li>
+                            <li><a class="form-theme" data-toggle="disabled-fieldset" href="#">Toggle Disable</a></li>
+                        </ul>
+                    </div>
+                    Provider Edit
+                </h2>
 
-                                {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
-                                    {{ form_widget(edit_form._token) }}
+                {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
+                    {{ form_widget(edit_form._token) }}
 
-                                    <div class="form-group">
-                                        <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            {{ form_widget(edit_form.name, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
-                                            {{ form_errors(edit_form.name) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cemail" class="control-label col-lg-2">Email <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            {{ form_widget(edit_form.email, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
-                                            {{ form_errors(edit_form.email) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="caddress" class="control-label col-lg-2">Address <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            {{ form_widget(edit_form.address, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
-                                            {{ form_errors(edit_form.address) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cphonenumber" class="control-label col-lg-2">Phone number <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            {{ form_widget(edit_form.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
-                                            {{ form_errors(edit_form.phoneNumber) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cnote" class="control-label col-lg-2">Note</label>
-                                        <div class="col-lg-10">
-                                            {{ form_widget(edit_form.note, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-lg-offset-2 col-lg-10">
-                                            <input class="btn btn-primary" type="submit" value="Create">
-                                            <a class="btn btn-default" href="{{ path('provider_index') }}">Back to the list</a>
-                                        </div>
-                                    </div>
-                                {{ form_end(edit_form) }}
-
-                            </div>
+                    {% set _class = 'form-group' %}
+                        {% if not edit_form.name.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
+                        <div class="col-lg-10">
+                            {{ form_widget(edit_form.name, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                            {{ form_errors(edit_form.name) }}
                         </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-    </section>
-{% endblock %}
+                    </div>
 
+                    {% set _class = 'form-group' %}
+                        {% if not edit_form.email.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        <label for="cemail" class="control-label col-lg-2">Email <span class="required">*</span></label>
+                        <div class="col-lg-10">
+                            {{ form_widget(edit_form.email, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                            {{ form_errors(edit_form.email) }}
+                        </div>
+                    </div>
+
+                    {% set _class = 'form-group' %}
+                        {% if not edit_form.address.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        <label for="caddress" class="control-label col-lg-2">Address <span class="required">*</span></label>
+                        <div class="col-lg-10">
+                            {{ form_widget(edit_form.address, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                            {{ form_errors(edit_form.address) }}
+                        </div>
+                    </div>
+
+                    {% set _class = 'form-group' %}
+                        {% if not edit_form.phoneNumber.vars.valid %}
+                        {% set _class = 'form-group has-error' %}
+                    {% endif %}
+                    <div class="{{ _class }}">
+                        <label for="cphonenumber" class="control-label col-lg-2">Phone number <span class="required">*</span></label>
+                        <div class="col-lg-10">
+                            {{ form_widget(edit_form.phoneNumber, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                            {{ form_errors(edit_form.phoneNumber) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cnote" class="control-label col-lg-2">Note</label>
+                        <div class="col-lg-10">
+                            {{ form_widget(edit_form.note, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <input class="btn btn-primary" type="submit" value="Create">
+                            <a class="btn btn-default" href="{{ path('provider_index') }}">Back to the list</a>
+                        </div>
+                    </div>
+                {{ form_end(edit_form) }}
+            </div><!-- /box -->
+        </div><!-- /magic-layout -->
+    </div><!-- /app body -->
+{% endblock %}

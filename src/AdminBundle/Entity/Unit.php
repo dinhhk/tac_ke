@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="unit")
  * @ORM\Entity(repositoryClass="AdminBundle\Repository\UnitRepository")
+ * @UniqueEntity("name")
  */
 class Unit
 {

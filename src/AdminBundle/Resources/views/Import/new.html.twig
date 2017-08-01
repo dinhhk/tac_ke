@@ -1,145 +1,154 @@
 {% extends 'layoutAdminDefault.html.twig' %}
-{% block body %}
- <section id="main-content">
-    <section class="wrapper"> 
-        <div class="row">
-            <div class="col-lg-12">
-                <section class="panel panel-default" style='margin-bottom: 0px'>
-                    <header class="panel-heading">
-                        Import Creation
-                    </header>
-                    <div class="panel-body">
-                        {{ form_start(form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-9 col-md-9 col-sm-9">
-                                        <div class="col-md-6">
-                                            {{ form_label(form.provider, 'Provider') }}
-                                            
-                                            <div class="input-group">
-                                                {% set _class = 'form-control' %}
-                                                {% if not form.provider.vars.valid %}
-                                                    {% set _class = 'form-control error' %}
-                                                {% endif %}
-                                                {{ form_widget(form.provider, {'attr': {'class': _class}}) }}
-                                                <div class="input-group-addon">
-                                                    <span class="fa fa-plus"></span>
-                                                </div>
-                                            </div>
-
-                                            {{ form_errors(form.provider) }}
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            {{ form_label(form.import_details.vars.prototype.product, 'Product') }}
-                                            
-                                            <div class="input-group">
-                                                {% set _class = 'form-control' %}
-                                                {% if form.import_details.__name__.product.vars.valid is defined and form.import_details.__name__.product.vars.valid == FALSE %}
-                                                    {% set _class = 'form-control error' %}
-                                                {% endif %}
-                                                {% if form.import_details.children.__name__.product is defined %}
-                                                    {{ form_widget(form.import_details.children.__name__.product, {'attr': {'class': _class}}) }}
-                                                {% else %}
-                                                    {{ form_widget(form.import_details.vars.prototype.product, {'attr': {'class': _class}}) }}
-                                                {% endif %}
-                                                <div class="input-group-addon">
-                                                    <span class="fa fa-plus"></span>
-                                                </div>
-                                            </div>
-
-                                            {% if form.import_details.__name__.product is defined %}
-                                                {{ form_errors(form.import_details.__name__.product) }} 
-                                            {% endif %}
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            {{ form_label(form.import_details.vars.prototype.quantity, 'Quantity') }}
-
-                                            {% set _class = 'form-control number-input quantity' %}
-                                            {% if form.import_details.__name__.quantity.vars.valid is defined and form.import_details.__name__.quantity.vars.valid == FALSE %}
-                                                {% set _class = 'form-control number-input quantity error' %}
-                                            {% endif %}
-                                            {% if form.import_details.children.__name__.quantity is defined %}
-                                                {{ form_widget(form.import_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
-                                            {% else %}
-                                                {{ form_widget(form.import_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
-                                            {% endif %}
-
-                                            {% if form.import_details.__name__.quantity is defined %}
-                                                {{ form_errors(form.import_details.__name__.quantity) }} 
-                                            {% endif %}
-                                        </div>
-                                        
-                                        <div class="col-md-4">
-                                            {{ form_label(form.import_details.vars.prototype.unitPrice, 'Unit Price') }}
-                                            
-                                            {% set _class = 'form-control number-input unit-price' %}
-                                            {% if form.import_details.__name__.unitPrice.vars.valid is defined and form.import_details.__name__.unitPrice.vars.valid == FALSE %}
-                                                {% set _class = 'form-control number-input unit-price error' %}
-                                            {% endif %}
-                                            {% if form.import_details.children.__name__.unitPrice is defined %}
-                                                {{ form_widget(form.import_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
-                                            {% else %}
-                                                {{ form_widget(form.import_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
-                                            {% endif %}
-                                            
-                                            {% if form.import_details.__name__.unitPrice is defined %}
-                                                {{ form_errors(form.import_details.__name__.unitPrice) }} 
-                                            {% endif %}
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <label for="admin_import_price">Total</label>
-                                            <input id="admin_import_price" name="admin_import_price" class="form-control" type="text" readonly="readonly">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            {{ form_label(form.note, 'Note') }}
-                                            {{ form_widget(form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3}}) }}
-                                            {{ form_errors(form.note) }}
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            {{ form_label(form.payment, 'Payment') }}
-                                            {{ form_widget(form.payment, {'attr': {'class': 'form-control', 'rows': 3}}) }}
-                                            {{ form_errors(form.payment) }}
-                                        </div>       
-
-                                        <div class="col-md-12 hidden">
-                                            {{ form_label(form.total, 'Total') }}
-                                            {% set _class = 'form-control' %}
-                                            {% if not form.total.vars.valid %}
-                                                {% set _class = 'form-control error' %}
-                                            {% endif %}
-                                            {{ form_widget(form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
-                                            {{ form_errors(form.total) }}
-                                        </div>         
-                                    </div>
-                          
-                                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:20px">
-                                        <div class="form-group">
-                                            <img id="product_image" height="210" width="210" src="#" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                      
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <input class="btn btn-primary" type="submit" value="Create">
-                                    <a class="btn btn-default" href="{{ path('import_index') }}">Back to the list</a>
-                                </div>
-                            </div>
-                            {{ form_widget(form.import_details, {'attr': {'class': 'hidden'}}) }}
-                        {{ form_end(form) }}  
+{% block content_app_body %}
+    <div class="app-body">
+        <div class="magic-layout">
+            <div class="box magic-element width-full">
+                <h2 class="box-heading">
+                    <div class="btn-group pull-right">
+                        <a href="#" role="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon ion-ios7-arrow-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="form-theme" data-toggle="default" href="#">Default</a></li>
+                            <li><a class="form-theme" data-toggle="flat" href="#">Flat</a></li>
+                            <li><a class="form-theme" data-toggle="ion" href="#">Ion</a></li>
+                            <li class="divider"></li>
+                            <li><a class="form-theme" data-toggle="flat-ion" href="#">Flat & Ion</a></li>
+                            <li class="divider"></li>
+                            <li><a class="form-theme" data-toggle="disabled-fieldset" href="#">Toggle Disable</a></li>
+                        </ul>
                     </div>
-                </section>
-            </div>
-        </div>
-    </section>
-</section>
-{% endblock body %}
+                    Import Creation
+                </h2>
+                
+                {{ form_start(form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <div class="col-md-6">
+                                    {{ form_label(form.provider, 'Provider') }}
+                                    
+                                    <div class="input-group">
+                                        {% set _class = 'form-control' %}
+                                        {% if not form.provider.vars.valid %}
+                                            {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        {{ form_widget(form.provider, {'attr': {'class': _class}}) }}
+                                        <div class="input-group-addon">
+                                            <span class="fa fa-plus"></span>
+                                        </div>
+                                    </div>
+
+                                    {{ form_errors(form.provider) }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{ form_label(form.import_details.vars.prototype.product, 'Product') }}
+                                    
+                                    <div class="input-group">
+                                        {% set _class = 'form-control' %}
+                                        {% if form.import_details.__name__.product.vars.valid is defined and form.import_details.__name__.product.vars.valid == FALSE %}
+                                            {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        {% if form.import_details.children.__name__.product is defined %}
+                                            {{ form_widget(form.import_details.children.__name__.product, {'attr': {'class': _class}}) }}
+                                        {% else %}
+                                            {{ form_widget(form.import_details.vars.prototype.product, {'attr': {'class': _class}}) }}
+                                        {% endif %}
+                                        <div class="input-group-addon">
+                                            <span class="fa fa-plus"></span>
+                                        </div>
+                                    </div>
+
+                                    {% if form.import_details.__name__.product is defined %}
+                                        {{ form_errors(form.import_details.__name__.product) }} 
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-4">
+                                    {{ form_label(form.import_details.vars.prototype.quantity, 'Quantity') }}
+
+                                    {% set _class = 'form-control number-input quantity' %}
+                                    {% if form.import_details.__name__.quantity.vars.valid is defined and form.import_details.__name__.quantity.vars.valid == FALSE %}
+                                        {% set _class = 'form-control number-input quantity error' %}
+                                    {% endif %}
+                                    {% if form.import_details.children.__name__.quantity is defined %}
+                                        {{ form_widget(form.import_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
+                                    {% else %}
+                                        {{ form_widget(form.import_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
+                                    {% endif %}
+
+                                    {% if form.import_details.__name__.quantity is defined %}
+                                        {{ form_errors(form.import_details.__name__.quantity) }} 
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    {{ form_label(form.import_details.vars.prototype.unitPrice, 'Unit Price') }}
+                                    
+                                    {% set _class = 'form-control number-input unit-price' %}
+                                    {% if form.import_details.__name__.unitPrice.vars.valid is defined and form.import_details.__name__.unitPrice.vars.valid == FALSE %}
+                                        {% set _class = 'form-control number-input unit-price error' %}
+                                    {% endif %}
+                                    {% if form.import_details.children.__name__.unitPrice is defined %}
+                                        {{ form_widget(form.import_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
+                                    {% else %}
+                                        {{ form_widget(form.import_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
+                                    {% endif %}
+                                    
+                                    {% if form.import_details.__name__.unitPrice is defined %}
+                                        {{ form_errors(form.import_details.__name__.unitPrice) }} 
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="admin_import_price">Total</label>
+                                    <input id="admin_import_price" name="admin_import_price" class="form-control" type="text" readonly="readonly">
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{ form_label(form.note, 'Note') }}
+                                    {{ form_widget(form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3}}) }}
+                                    {{ form_errors(form.note) }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{ form_label(form.payment, 'Payment') }}
+                                    {{ form_widget(form.payment, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+                                    {{ form_errors(form.payment) }}
+                                </div>       
+
+                                <div class="col-md-12 hidden">
+                                    {{ form_label(form.total, 'Total') }}
+                                    {% set _class = 'form-control' %}
+                                    {% if not form.total.vars.valid %}
+                                        {% set _class = 'form-control error' %}
+                                    {% endif %}
+                                    {{ form_widget(form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
+                                    {{ form_errors(form.total) }}
+                                </div>         
+                            </div>
+                  
+                            <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:20px">
+                                <div class="form-group">
+                                    <img id="product_image" height="210" width="210" src="#" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input class="btn btn-primary" type="submit" value="Create">
+                            <a class="btn btn-default" href="{{ path('import_index') }}">Back to the list</a>
+                        </div>
+                    </div>
+                    {{ form_widget(form.import_details, {'attr': {'class': 'hidden'}}) }}
+                {{ form_end(form) }}  
+            </div><!-- /box -->
+        </div><!-- /magic-layout -->
+    </div><!-- /app body -->
+{% endblock %}
 {% block javascripts %}
 {{ parent() }}
 <script type="text/javascript">
