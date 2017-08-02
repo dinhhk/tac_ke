@@ -4,19 +4,14 @@
         <div class="magic-layout">
             <div id="panel" class="panel panel-default magic-element width-full">
                 <div class="panel-heading">
-                    <div class="panel-icon"><i class="icon ion-ios7-photos-outline"></i></div>
+                    {% include 'partials/admin/messages.html.twig' %}
+                    <div class="panel-icon"><i class="icon ion-ios7-download-outline"></i></div>
                     <div class="panel-actions">
                         <a role="button" data-refresh="#panel" title="refresh" class="btn btn-sm btn-icon">
                             <i class="icon ion-refresh"></i>
                         </a>
                         <a role="button" data-expand="#panel" title="expand" class="btn btn-sm btn-icon">
                             <i class="icon ion-arrow-resize"></i>
-                        </a>
-                        <a role="button" data-collapse="#panel" title="collapse" class="btn btn-sm btn-icon">
-                            <i class="icon ion-chevron-down"></i>
-                        </a>
-                        <a role="button" data-close="#panel" title="close" class="btn btn-sm btn-icon">
-                            <i class="icon ion-close-round"></i>
                         </a>
                     </div><!-- /panel-actions -->
                     <h3 class="panel-title">Import list</h3>
@@ -28,7 +23,7 @@
                                 <th>#</th>
                                 <th>Import ID</th>
                                 <th>Provider</th>
-                                <th>Date Order</th>
+                                <th>Verify</th>
                                 <th>Total</th>
                                 <th>Create At</th>
                                 <th>Updated At</th> 
@@ -43,15 +38,19 @@
                                     <td>{{ count }}</td>
                                     <td><a href="{{ path('import_show', { 'id': import.id }) }}">{{ import.id|generateId() }}</a></td>
                                     <td>{{ import.provider.name }}</td>
-                                    <td>{% if import.dateOrder %}{{ import.dateOrder|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    <td>{% if import.verified == true %}
+                                        <img src="https://thumb9.shutterstock.com/display_pic_with_logo/436114/561785266/stock-vector-verified-stamp-sticker-seal-round-grunge-vintage-ribbon-verified-sign-561785266.jpg" width="45" height="40" />
+                                    {% endif %}</td>
                                     <td>{{ import.total|number_format(0, '.', ',') }}</td>
                                     <td>{% if import.createdAt %}{{ import.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                                     <td>{% if import.updatedAt %}{{ import.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-ion btn-primary" href="{{ path('import_new') }}">Add</a>
-                                            <a class="btn btn-ion btn-success" href="{{ path('import_edit', { 'id': import.id }) }}">Edit</a>
-                                            <a href="{{ path('import_delete', {'id': import.id }) }}" onclick="confirm('Are you sure?');" class="btn btn-ion btn-danger btn-delete">Delete</a>
+                                            {% if import.verified == false %}
+                                                <a class="btn btn-ion btn-success" href="{{ path('import_edit', { 'id': import.id }) }}">Edit</a>
+                                                <a href="{{ path('import_delete', {'id': import.id }) }}" onclick="confirm('Are you sure?');" class="btn btn-ion btn-danger btn-delete">Delete</a>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>

@@ -3,12 +3,15 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Bill
  *
  * @ORM\Table(name="bill")
  * @ORM\Entity(repositoryClass="AdminBundle\Repository\BillRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Bill
 {
@@ -20,6 +23,7 @@ class Bill
     /**
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="bills")
      * @ORM\JoinColumn(name="id_customer", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $customer;
 
@@ -43,6 +47,7 @@ class Bill
      * @var float
      *
      * @ORM\Column(name="total", type="float")
+     * @Assert\NotBlank()
      */
     private $total;
 
@@ -52,6 +57,13 @@ class Bill
      * @ORM\Column(name="payment", type="string", length=200, nullable=true)
      */
     private $payment;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="verified", type="boolean", options={"default" : 0})
+     */
+    private $verified;
 
     /**
      * @var string
@@ -245,8 +257,29 @@ class Bill
      */
     public function addBillDetail(\AdminBundle\Entity\BillDetail $billDetail)
     {
-        $this->bill_details[] = $billDetail;
+        if(count($this->bill_details) > 0) {
+            $curr_product_id = ($bill_details->getProduct()) ? $bill_details->getProduct()->getId() : '';
+            foreach($this->bill_details as $_bill_detail) {
+                $prev_product_id = $_bill_detail->getProduct()->getId();
+                if($prev_product_id == $curr_product_id) {
+                    $_action = $this->getAction();
+                    $sum_quantity = 0;
+                    if($_action == 'add') {
+                        $sum_quantity = $billDetail->getQuantity() + $_bill_detail->getQuantity();
+                    } elseif($_action == 'update') {
+                        $sum_quantity = $billDetail->getQuantity();
+                    }   
+                    
+                    $_bill_detail->setQuantity($sum_quantity);
+                    $_bill_detail->setUnitPrice($billDetail->getUnitPrice());
 
+                    return;
+                }                
+            }
+        } 
+
+        $this->bill_details[] = $billDetail;
+        $billDetail->setBill($this);
         return $this;
     }
 
@@ -292,5 +325,30 @@ class Bill
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateOrderValue()
+    {
+        $this->dateOrder = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

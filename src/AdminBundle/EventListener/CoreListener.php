@@ -24,7 +24,7 @@ class CoreListener {
      */
     public function postPersist(LifecycleEventArgs $args)
     {
-        $this->prepareDataImport($args);
+    
     }
 
     /**
@@ -35,8 +35,11 @@ class CoreListener {
         $this->prepareDataImport($args);
     }
 
+    /**
+     * Hook postRemove
+     */
     public function postRemove(LifecycleEventArgs $args) {
-        $this->prepareDataImport($args);
+        
     }
     
     /**
@@ -47,27 +50,30 @@ class CoreListener {
         $entity = $args->getEntity();
         $this->em = $args->getEntityManager();
 
-        if ($entity instanceof ImportDetail) {
-            $import = $entity->getImport();
+        if ($entity instanceof Import) {
+            if($entity->getVerified() == 1) {
+                $updated_at = $entity->getUpdatedAt();
 
-            $created_at = $import->getCreatedAt();
-            $updated_at = $import->getUpdatedAt();
+                $this->year = $updated_at->format('Y');
+                $this->month = $updated_at->format('m');
+                $this->day = $updated_at->format('d'); 
 
-            $this->year = $updated_at->format('Y');
-            $this->month = $updated_at->format('m');
-            $this->day = $updated_at->format('d'); 
+                $updated_at_month = $updated_at->format('m');
+                $current_month = date("m");
 
-            $created_at_month = $created_at->format('m');
-            $updated_at_month = $updated_at->format('m');
-            $current_month = date("m");
-
-            if($current_month == $created_at_month && $current_month == $updated_at_month) {
-                $this->id_product = $entity->getProduct()->getId();
-                $this->product = $entity->getProduct();
-                $this->quantity = $entity->getQuantity();
-                $this->total_quantity = $this->getTotalQuantity();
-
-                $this->processDataImport();
+                if($current_month == $updated_at_month) {
+                    $import_details = $entity->getImportDetails();
+                    
+                    foreach($import_details as $import_detail) {
+                        if ($import_detail instanceof ImportDetail) {
+                            $this->id_product = $import_detail->getProduct()->getId();
+                            $this->product = $import_detail->getProduct();
+                            $this->quantity = $import_detail->getQuantity();
+                            $this->total_quantity = $this->getTotalQuantity();
+                            $this->processDataImport();
+                        }
+                    }
+                }    
             }
         } 
     }

@@ -6,6 +6,7 @@ use AdminBundle\Entity\Import;
 use AdminBundle\Entity\ImportDetail;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Import controller.
@@ -78,6 +79,14 @@ class ImportController extends Controller
      */
     public function editAction(Request $request, Import $import)
     {
+        if($import->getVerified() == TRUE) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('error', 'The import was out of date.');
+
+            return $this->redirectToRoute('import_index');
+        }
+
         $import_details = $import->getImportDetails();
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($import_details, $request->query->getInt('page', 1), 10);
@@ -94,6 +103,13 @@ class ImportController extends Controller
             $import->setAction('add');
         } elseif($request->request->has('update')) {
             $import->setAction('update');
+        } elseif($request->request->has('verified')) {
+            $import->setAction('verified');
+            $import->setVerified(1);
+            
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('import_edit', array('id' => $import->getId()));
         }
 
         $editForm->handleRequest($request);
@@ -123,6 +139,14 @@ class ImportController extends Controller
      */
     public function deleteAction(Request $request, Import $import)
     {
+        if($import->getVerified() == TRUE) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('error', 'The import was out of date.');
+
+            return $this->redirectToRoute('import_index');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $form = $this->createDeleteForm($import);
         $form->handleRequest($request);

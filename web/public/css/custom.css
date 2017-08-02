@@ -15,3 +15,18 @@ tr.table-hover-highlighted td {
 .form-validate .form-group .error{
     border-color: #e74c3c !important;
 }
+
+.header-shadow{
+    background-image: url('../images/header-shade.jpg');
+}
+
+.table-bordered.verified{
+	background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReGqsCzwgeLjK8DJSUf1jCdLPzz6fzgTlocWn-2bLo518BtoxA);
+	background-repeat: no-repeat;
+    background-position: center; 
+}
+
+.table-hover.verified>tbody>tr:hover>td,
+.table-hover.verified>tbody>tr:hover>th {
+  background-color: transparent;
+}

@@ -3,26 +3,27 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Import
  *
  * @ORM\Table(name="import")
  * @ORM\Entity(repositoryClass="AdminBundle\Repository\ImportRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Import
 {
     /**
-     * @ORM\OneToMany(targetEntity="ImportDetail", mappedBy="import")
-     * @Assert\All({
-     *     @Assert\Type(type="AdminBundle\Entity\ImportDetail"),
-     * })
+     * @ORM\OneToMany(targetEntity="ImportDetail", mappedBy="import", cascade={"persist"})
      */
     private $import_details;
 
     /**
      * @ORM\ManyToOne(targetEntity="Provider", inversedBy="imports")
      * @ORM\JoinColumn(name="id_provider", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $provider;
 
@@ -46,6 +47,7 @@ class Import
      * @var float
      *
      * @ORM\Column(name="total", type="float")
+     * @Assert\NotBlank()
      */
     private $total;
 
@@ -55,6 +57,13 @@ class Import
      * @ORM\Column(name="payment", type="string", length=200, nullable=true)
      */
     private $payment;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="verified", type="boolean", options={"default" : 0})
+     */
+    private $verified;
 
     /**
      * @var string
@@ -77,6 +86,11 @@ class Import
      */
     private $updatedAt;
 
+    /**
+     * @var String
+     *
+     */
+    private $action;
 
     /**
      * Get id
@@ -231,6 +245,30 @@ class Import
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     *
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
     /**
      * Constructor
      */
@@ -247,9 +285,31 @@ class Import
      * @return Import
      */
     public function addImportDetail(\AdminBundle\Entity\ImportDetail $importDetail)
-    {
-        $this->import_details[] = $importDetail;
+    {       
+        if(count($this->import_details) > 0) {
+            $curr_product_id = ($importDetail->getProduct()) ? $importDetail->getProduct()->getId() : '';
+            foreach($this->import_details as $_import_detail) {
+                $prev_product_id = $_import_detail->getProduct()->getId();
+                if($prev_product_id == $curr_product_id) {
+                    $_action = $this->getAction();
+                    $sum_quantity = 0;
+                    if($_action == 'add') {
+                        $sum_quantity = $importDetail->getQuantity() + $_import_detail->getQuantity();
+                    } elseif($_action == 'update') {
+                        $sum_quantity = $importDetail->getQuantity();
+                    }   
+                    
+                    $_import_detail->setQuantity($sum_quantity);
+                    $_import_detail->setUnitPrice($importDetail->getUnitPrice());
 
+                    return;
+                }                
+            }
+        }   
+        
+        $this->import_details[] = $importDetail;
+        
+        $importDetail->setImport($this);
         return $this;
     }
 
@@ -295,5 +355,30 @@ class Import
     public function getProvider()
     {
         return $this->provider;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateOrderValue()
+    {
+        $this->dateOrder = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

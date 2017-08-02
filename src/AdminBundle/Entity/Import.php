@@ -59,6 +59,13 @@ class Import
     private $payment;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="verified", type="boolean", options={"default" : 0})
+     */
+    private $verified;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="note", type="string", length=500, nullable=true)
@@ -373,5 +380,37 @@ class Import
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Set verified
+     *
+     * @param boolean $verified
+     *
+     * @return Import
+     */
+    public function setVerified($verified)
+    {
+        $this->verified = $verified;
+
+        return $this;
+    }
+
+    /**
+     * Get verified
+     *
+     * @return boolean
+     */
+    public function getVerified()
+    {
+        return $this->verified;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setVerifiedValue()
+    {
+        $this->verified = 0;
     }
 }

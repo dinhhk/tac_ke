@@ -59,6 +59,13 @@ class Bill
     private $payment;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="verified", type="boolean", options={"default" : 0})
+     */
+    private $verified;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="note", type="string", length=255, nullable=true)
@@ -343,5 +350,29 @@ class Bill
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Set verified
+     *
+     * @param boolean $verified
+     *
+     * @return Bill
+     */
+    public function setVerified($verified)
+    {
+        $this->verified = $verified;
+
+        return $this;
+    }
+
+    /**
+     * Get verified
+     *
+     * @return boolean
+     */
+    public function getVerified()
+    {
+        return $this->verified;
     }
 }
