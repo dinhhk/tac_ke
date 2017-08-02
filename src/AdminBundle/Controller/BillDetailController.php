@@ -101,6 +101,15 @@ class BillDetailController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($billDetail);
             $em->flush();
+
+            if($request->isXMLHttpRequest())
+            {
+                return new Response(
+                    json_encode(array('removed' => 1, 'message' => 'Bill detail has been deleted.')),
+                    200,
+                    array('Content-Type' => 'application/json')
+                );
+            }
         }
 
         return $this->redirectToRoute('billdetail_index');

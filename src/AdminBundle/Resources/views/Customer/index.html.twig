@@ -4,19 +4,13 @@
         <div class="magic-layout">
             <div id="panel" class="panel panel-default magic-element width-full">
                 <div class="panel-heading">
-                    <div class="panel-icon"><i class="icon ion-ios7-photos-outline"></i></div>
+                    <div class="panel-icon"><i class="icon ion-ios7-people-outline"></i></div>
                     <div class="panel-actions">
                         <a role="button" data-refresh="#panel" title="refresh" class="btn btn-sm btn-icon">
                             <i class="icon ion-refresh"></i>
                         </a>
                         <a role="button" data-expand="#panel" title="expand" class="btn btn-sm btn-icon">
                             <i class="icon ion-arrow-resize"></i>
-                        </a>
-                        <a role="button" data-collapse="#panel" title="collapse" class="btn btn-sm btn-icon">
-                            <i class="icon ion-chevron-down"></i>
-                        </a>
-                        <a role="button" data-close="#panel" title="close" class="btn btn-sm btn-icon">
-                            <i class="icon ion-close-round"></i>
                         </a>
                     </div><!-- /panel-actions -->
                     <h3 class="panel-title">Customer list</h3>
@@ -40,7 +34,13 @@
                                 <tr>
                                     <td><a href="{{ path('customer_show', { 'id': customer.id }) }}">{{ customer.id }}</a></td>
                                     <td>{{ customer.name }}</td>
-                                    <td>{{ customer.gender }}</td>
+                                    <td>
+                                        {% if customer.gender == 1 %}
+                                            Male
+                                        {% else %}
+                                            Female
+                                        {% endif %}
+                                    </td>
                                     <td>{{ customer.email }}</td>
                                     <td>{{ customer.phoneNumber }}</td>
                                     <td>

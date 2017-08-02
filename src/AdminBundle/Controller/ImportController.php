@@ -36,7 +36,6 @@ class ImportController extends Controller
     public function newAction(Request $request)
     {
         $import = new Import();
-        $importDetail = new ImportDetail();
 
         $form = $this->createForm('AdminBundle\Form\ImportType', $import);
         $form->handleRequest($request);
@@ -89,7 +88,7 @@ class ImportController extends Controller
 
         $import_details = $import->getImportDetails();
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($import_details, $request->query->getInt('page', 1), 10);
+        $pagination = $paginator->paginate($import_details, $request->query->getInt('page', 1), 100);
 
         //$deleteForm = $this->createDeleteForm($import);
         $deleteForm = $this->createFormBuilder()
@@ -159,7 +158,7 @@ class ImportController extends Controller
                 ->getFlashBag()
                 ->add('success', 'A import have deleted successfully.');
         } else {
-            $em->remove($product);
+            $em->remove($import);
             $em->flush();
 
             $request->getSession()

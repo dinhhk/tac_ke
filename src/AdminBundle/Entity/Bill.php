@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Bill
 {
     /**
-     * @ORM\OneToMany(targetEntity="BillDetail", mappedBy="bill")
+     * @ORM\OneToMany(targetEntity="BillDetail", mappedBy="bill", cascade={"persist"})
      */
     private $bill_details;
 
@@ -86,6 +86,11 @@ class Bill
      */
     private $updatedAt;
 
+    /**
+     * @var String
+     *
+     */
+    private $action;
 
     /**
      * Get id
@@ -240,6 +245,30 @@ class Bill
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     *
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
     /**
      * Constructor
      */
@@ -374,5 +403,13 @@ class Bill
     public function getVerified()
     {
         return $this->verified;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setVerifiedValue()
+    {
+        $this->verified = 0;
     }
 }

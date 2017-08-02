@@ -42,6 +42,24 @@ class BillType extends AbstractType
                 'by_reference' => false,
                 'constraints' => array(new Valid())
             ));
+
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function(FormEvent $event) use ($options) {
+                $form = $event->getForm(); // FormInterface
+                $data = $event->getData(); 
+                $bill_details = $data->getBillDetails();
+                $total = 0;
+                if($bill_details) {
+                    foreach($bill_details as $bill_detail) {
+                        $quantity = $bill_detail->getQuantity();
+                        $unitPrice = $bill_detail->getUnitPrice();
+                        $total += $quantity * $unitPrice;
+                    }    
+                }
+                $form->getData()->setTotal($total);
+            }
+        );
     }
     
     /**

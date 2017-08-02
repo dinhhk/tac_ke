@@ -10,4 +10,5 @@ namespace AdminBundle\Repository;
  */
 class BillRepository extends \Doctrine\ORM\EntityRepository
 {
+	
 }

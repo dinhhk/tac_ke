@@ -42,7 +42,11 @@ class BillController extends Controller
             $em->persist($bill);
             $em->flush();
 
-            return $this->redirectToRoute('admin_bill_edit', array('id' => $bill->getId()));
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A bill have added successfully.');
+
+            return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
         }
 
         return $this->render('AdminBundle:Bill:new.html.twig', array(
@@ -71,20 +75,56 @@ class BillController extends Controller
      */
     public function editAction(Request $request, Bill $bill)
     {
-        $deleteForm = $this->createDeleteForm($bill);
-        $editForm = $this->createForm('AdminBundle\Form\BillType', $bill);
-        $editForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        if($bill->getVerified() == TRUE) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('error', 'The bill was out of date.');
 
+            return $this->redirectToRoute('bill_index');
+        }
+
+        $bill_details = $bill->getBillDetails();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($bill_details, $request->query->getInt('page', 1), 100);
+
+        //$deleteForm = $this->createDeleteForm($bill);
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('bill_detail_delete', array('id' => ':BILL_DETAIL_ID')))
+            ->setMethod('DELETE')
+            ->getForm();
+
+        $editForm = $this->createForm('AdminBundle\Form\BillType', $bill, array("pagination" => $pagination));
+
+        if($request->request->has('add')) {
+            $bill->setAction('add');
+        } elseif($request->request->has('update')) {
+            $bill->setAction('update');
+        } elseif($request->request->has('verified')) {
+            $bill->setAction('verified');
+            $bill->setVerified(1);
+            
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
+        }
+
+        $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_bill_edit', array('id' => $bill->getId()));
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A bill have updated successfully.');
+
+            return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
         }
 
         return $this->render('AdminBundle:Bill:edit.html.twig', array(
             'bill' => $bill,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'pagination' => $pagination
         ));
     }
 
@@ -94,16 +134,35 @@ class BillController extends Controller
      */
     public function deleteAction(Request $request, Bill $bill)
     {
+        if($bill->getVerified() == TRUE) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('error', 'The bill was out of date.');
+
+            return $this->redirectToRoute('bill_index');
+        }
+
+        $em = $this->getDoctrine()->getManager();
         $form = $this->createDeleteForm($bill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->remove($bill);
             $em->flush();
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A bill have deleted successfully.');
+        } else {
+            $em->remove($bill);
+            $em->flush();
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'A bill have deleted successfully.');
         }
 
-        return $this->redirectToRoute('admin_bill_index');
+        return $this->redirectToRoute('bill_index');
     }
 
     /**
@@ -116,7 +175,7 @@ class BillController extends Controller
     private function createDeleteForm(Bill $bill)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_bill_delete', array('id' => $bill->getId())))
+            ->setAction($this->generateUrl('bill_delete', array('id' => $bill->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

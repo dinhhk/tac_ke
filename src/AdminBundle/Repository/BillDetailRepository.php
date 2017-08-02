@@ -30,4 +30,6 @@ class BillDetailRepository extends \Doctrine\ORM\EntityRepository
 		
         return $results;
 	}
+
+	
 }

@@ -19,8 +19,8 @@ class CustomerType extends AbstractType
             ->add('name')
             ->add('gender', ChoiceType::class, array(
                     'choices'  => array(
-                        'Male' => true,
-                        'Female' => false,
+                        'Male' => 1,
+                        'Female' => 0,
                     ))
                 )
             ->add('email')

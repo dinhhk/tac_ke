@@ -1,21 +1,364 @@
-{% extends 'base.html.twig' %}
+{% extends 'layoutAdminDefault.html.twig' %}
+{% block content_app_body %}
+    <div class="app-body">
+        <div class="magic-layout">
+            <div class="box magic-element width-full">
+                {% include 'partials/admin/messages.html.twig' %}
+                <h2 class="box-heading">
+                    <div class="btn-group pull-right">
+                        <a href="#" role="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon ion-ios7-arrow-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="form-theme" data-toggle="default" href="#">Default</a></li>
+                            <li><a class="form-theme" data-toggle="flat" href="#">Flat</a></li>
+                            <li><a class="form-theme" data-toggle="ion" href="#">Ion</a></li>
+                            <li class="divider"></li>
+                            <li><a class="form-theme" data-toggle="flat-ion" href="#">Flat & Ion</a></li>
+                        </ul>
+                    </div>
+                    Bill Edit
+                </h2>
+                {% set _disabled = '' %}
+                {% set _verified = '' %}
+                {% if edit_form.vars.value.verified == true %}
+                    {% set _verified = 'verified' %}
+                    {% set _disabled = 'disabled' %}
+                {% endif %}
+                {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate', 'role': 'form'}}) }}
+                    <fieldset {{ _disabled }}>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <div class="col-md-6">
+                                        <label for="ccustomer">Customer <span class="required">*</span></label>
+                                        <div class="input-group" style="margin-left: 0px">
+                                            {% set _class = 'form-control' %}
+                                            {% if not edit_form.customer.vars.valid %}
+                                                {% set _class = 'form-control error' %}
+                                            {% endif %}
+                                            {{ form_widget(edit_form.customer, {'attr': {'class': _class, 'disabled': 'disabled'}}) }}
+                                            <div class="input-group-addon">
+                                                <span class="icon ion-ios7-plus-empty"></span>
+                                            </div>
+                                        </div>
 
-{% block body %}
-    <h1>Bill edit</h1>
+                                        {{ form_errors(edit_form.customer) }}
+                                    </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+                                    <div class="col-md-6">
+                                        <label for="cproduct">Product <span class="required">*</span></label>
+                                        
+                                        <div class="input-group">
+                                            {% set _class = 'form-control form-flat' %}
+                                            {% if edit_form.bill_details.__name__.product.vars.valid is defined and edit_form.bill_details.__name__.product.vars.valid == FALSE %}
+                                                {% set _class = 'form-control error' %}
+                                            {% endif %}
+                                            {% if edit_form.bill_details.children.__name__.product is defined %}
+                                                {{ form_widget(edit_form.bill_details.children.__name__.product, {'attr': {'class': _class}}) }}
+                                            {% else %}
+                                                {{ form_widget(edit_form.bill_details.vars.prototype.product, {'attr': {'class': _class}}) }}
+                                            {% endif %}
+                                            <div class="input-group-addon">
+                                                <span class="icon ion-ios7-plus-empty"></span>
+                                            </div>
+                                        </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('bill_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                                        {% if edit_form.bill_details.__name__.product is defined %}
+                                            {{ form_errors(edit_form.bill_details.__name__.product) }} 
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="cquantity">Quantity <span class="required">*</span></label>
+                                        {% set _class = 'form-control number-input quantity' %}
+                                        {% if edit_form.bill_details.__name__.quantity.vars.valid is defined and edit_form.bill_details.__name__.quantity.vars.valid == FALSE %}
+                                            {% set _class = 'form-control number-input quantity error' %}
+                                        {% endif %}
+                                        {% if edit_form.bill_details.children.__name__.quantity is defined %}
+                                            {{ form_widget(edit_form.bill_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
+                                        {% else %}
+                                            {{ form_widget(edit_form.bill_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
+                                        {% endif %}
+
+                                        {% if edit_form.bill_details.__name__.quantity is defined %}
+                                            {{ form_errors(edit_form.bill_details.__name__.quantity) }} 
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="cunitPrice">Unit Price <span class="required">*</span></label>
+                                        {% set _class = 'form-control number-input unit-price' %}
+                                        {% if edit_form.bill_details.__name__.unitPrice.vars.valid is defined and edit_form.bill_details.__name__.unitPrice.vars.valid == FALSE %}
+                                            {% set _class = 'form-control number-input unit-price error' %}
+                                        {% endif %}
+                                        {% if edit_form.bill_details.children.__name__.unitPrice is defined %}
+                                            {{ form_widget(edit_form.bill_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
+                                        {% else %}
+                                            {{ form_widget(edit_form.bill_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
+                                        {% endif %}
+                                        
+                                        {% if edit_form.bill_details.__name__.unitPrice is defined %}
+                                            {{ form_errors(edit_form.bill_details.__name__.unitPrice) }} 
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="admin_bill_price">Total</label>
+                                        <input id="admin_bill_price" name="admin_bill_price" class="form-control" type="text" readonly="readonly">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        {{ form_label(edit_form.note, 'Note') }}
+                                        {{ form_widget(edit_form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3, 'readonly': 'readonly'}}) }}
+                                        {{ form_errors(edit_form.note) }}
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        {{ form_label(edit_form.payment, 'Payment') }}
+                                        {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly'}}) }}
+                                        {{ form_errors(edit_form.payment) }}
+                                    </div>    
+
+                                    <div class="col-md-12 hidden">
+                                        {{ form_label(edit_form.total, 'Total') }}
+                                        {% set _class = 'form-control' %}
+                                        {% if not edit_form.total.vars.valid %}
+                                            {% set _class = 'form-control error' %}
+                                        {% endif %}
+                                        {{ form_widget(edit_form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
+                                        {{ form_errors(edit_form.total) }}
+                                    </div>            
+                                </div>
+                      
+                                <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:20px">
+                                    <div class="form-group">
+                                        <img id="product_image" height="210" width="210" src="#" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button id="add_bill_detail" class="btn btn-primary" type="submit" name="add">Add</button>
+                                <button id="update_bill_detail" class="btn btn-success" type="submit" name="update" disabled="disabled">Update</button>
+                                <a id="reset_bill_detail" class="btn btn-info" href="{{ path('bill_edit', {'id': edit_form.vars.value.id }) }}" disabled="disabled">Reset</a>
+                                <button id="verified_bill_detail" class="btn btn-warning" type="submit" name="verified">Verified</button>
+                                <a class="btn btn-default" href="{{ path('bill_index') }}">Back to the list</a>
+                            </div>
+                        </div>
+                        {{ form_widget(edit_form.bill_details, {'attr': {'class': 'hidden'}}) }}
+                    </fieldset>
+                    
+                {{ form_end(edit_form) }} 
+
+                <fieldset {{ _disabled }}>
+                    <div id="demo-variant" class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-icon"><i class="icon ion-navicon-round"></i></div>
+                            <div class="panel-actions">
+                                <div class="input-group">
+                                    <strong>TOTAL PRICE:</strong> <span class="text-info">{{ edit_form.vars.value.total|number_format(0, '.', ',') }} VNĐ </span> | 
+                                    <strong>TOTAL ROWS:</strong> <span class="text-info">{{ pagination.getTotalItemCount }}</span>
+                                </div>
+                            </div><!-- /panel-actions -->
+                            <h3 class="panel-title">Bill Details</h3>
+                        </div>
+                        <table class="table table-bordered table-hover {{ _verified }}">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% set count = 0 %}
+                                {% for bill_detail in edit_form.bill_details.children %}
+                                {% set count = count + 1 %}
+                                {% if bill_detail.vars.value.id is defined and bill_detail.vars.value.id is not null %}
+                                <tr data-bill-detail-id="{{ bill_detail.vars.value.id }}">
+                                    <td>
+                                       {{ count }}     
+                                    </td>
+                                    <td class="customer-name">
+                                        {% if edit_form.customer.vars.data.name is defined %}
+                                            {{ edit_form.customer.vars.data.name }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="product-name" data-product-id="{{ bill_detail.product.vars.data.id }}">
+                                        {% if bill_detail.product.vars.data.name is defined %}
+                                            {{ bill_detail.product.vars.data.name }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="quantity text-right">
+                                        {% if bill_detail.quantity.vars.value is defined %}
+                                            {{ bill_detail.quantity.vars.value|number_format(0, '.', ',') }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="unit-price text-right">
+                                        {% if bill_detail.unitPrice.vars.value is defined %}
+                                            {{ bill_detail.unitPrice.vars.value|number_format(0, '.', ',') }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="total text-right">
+                                        {% if bill_detail.quantity.vars.value is defined and bill_detail.unitPrice.vars.value is defined %}
+                                            {{ (bill_detail.quantity.vars.value * bill_detail.unitPrice.vars.value)|number_format(0, '.', ',') }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ form_start(delete_form, {'attr': {'id': 'form-delete'|default('form')}} ) }}
+                                        <div class="btn-group">
+                                            <input class="btn btn-ion btn-danger btn-delete" type="button" value="Delete">
+                                            <input class="btn btn-ion btn-success edit-product-detail" type="button" data-product-detail-id="{{ bill_detail.vars.value.id }}" value="Edit">
+                                        </div>
+                                        {{ form_end(delete_form) }}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table><!-- /table -->
+                        <div class="panel-footer">
+                            Text on footer
+                            <div class="navigation" align="center">{{ knp_pagination_render(pagination) }}</div>
+                        </div>
+                    </div><!-- /panel-default -->
+                </fieldset>
+            </div><!-- /box -->
+        </div><!-- /magic-layout -->
+    </div><!-- /app body -->
+
+
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('public/assets/bootbox/bootbox.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        addImageByAjax();
+    });
+
+    $( "#admin_bill_bill_details___name___product" ).change(function() {
+        addImageByAjax();
+    });
+
+    function addImageByAjax() {
+        var id = $("#admin_bill_bill_details___name___product option:selected").val();
+        $.ajax({
+            url: "/admin/product/info",
+            type: "POST",
+            data: { id : id },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status == 1) {
+                    var image = !data.product.image ? 'https://www.oatey.com/ASSETS/IMAGES/ITEMS/DETAIL_PAGE/NoImage.png' : '/' + data.product.image;
+                    $('#product_image').attr('src', image);
+                }
+            },
+            error: function (xhr, status, error) {
+                //console.log(xhr.responseText);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $('.number-input.quantity').keyup(function(e) { 
+            if(e.keyCode == 9 || (e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) { 
+                $('#admin_bill_price').val(calculatePrice());
+                return;
+            }
+            $('.number-input.quantity').val('');
+            $('#admin_bill_price').val(calculatePrice());
+        });
+
+        $('.number-input.unit-price').keyup(function(e) { 
+            if(e.keyCode == 9 || (e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) { 
+                $('#admin_bill_price').val(calculatePrice());
+                return;
+            }
+            $('.number-input.unit-price').val('');
+            $('#admin_bill_price').val(calculatePrice());
+        });
+
+        $('.table-hover tr').click(function(e) {
+            $('.table-hover tr').removeClass('table-hover-highlighted');
+            $(this).addClass('table-hover-highlighted');
+        });
+
+        $('.edit-product-detail').click(function(event) {    
+            event.preventDefault();         
+            var tr = $(this).closest('tr');
+            var product_id = parseInt(tr.find('.product-name').attr('data-product-id'));
+            var quantity = parseInt(tr.find('.quantity').text().replace(/\s/g, "").replace(",", ""));
+            var unitPrice = parseInt(tr.find('.unit-price').text().replace(/\s/g, "").replace(",", ""));
+            
+            $('#admin_bill_bill_details___name___quantity').val(quantity);
+            $('#admin_bill_bill_details___name___unitPrice').val(unitPrice);
+            $('#admin_bill_bill_details___name___product').val(product_id).change();
+
+            $("#add_bill_detail").prop("disabled", true);
+            $("#verified_bill_detail").prop("disabled", true);
+
+            $("#admin_bill_note").removeAttr("readonly");
+            $("#admin_bill_payment").removeAttr("readonly");
+
+            $("#admin_bill_customer").removeAttr("disabled");
+            $("#update_bill_detail").removeAttr("disabled");
+            $("#reset_bill_detail").removeAttr("disabled");
+        
+            $('#admin_bill_price').val(calculatePrice());
+        });
+
+        $('form').submit(function(e) {
+            $(':disabled').each(function(e) {
+                if(this.name != 'update') {
+                    $(this).removeAttr('disabled');
+                }
+            })
+        });
+
+        $(document).ready(function(){
+            $('.btn-delete').on('click', function(e){
+                e.preventDefault();
+                var row = $(this).parents('tr');
+                bootbox.confirm("Are you sure?", function(result) {
+                    if(result == true) {
+                        var id = row.data('bill-detail-id');                
+                        var form = $('#form-delete');                
+                        var url = form.attr('action').replace(':BILL_DETAIL_ID', id);
+                        var data = form.serialize();                        
+                        $.post(url, data, function(result){
+                            var status = result.removed;
+                            if(status == 1)
+                            {
+                                row.fadeOut();  
+                            }
+                        }).fail(function(xhr, status, error){
+                            console.log(xhr.responseText);
+                        });
+                    }
+                }); 
+
+            })
+        });
+    });
+
+    function calculatePrice() {
+        var quantity = parseInt($('.number-input.quantity').val());
+        var unit_price = parseInt($('.number-input.unit-price').val());
+
+        if(unit_price > 0 && quantity > 0) {
+            return quantity * unit_price;
+        }
+
+        return '';
+    }
+
+</script>
+{% endblock javascripts %}
