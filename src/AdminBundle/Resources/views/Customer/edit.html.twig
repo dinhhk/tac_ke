@@ -3,22 +3,7 @@
     <div class="app-body">
         <div class="magic-layout">
             <div class="box magic-element width-full">
-                <h2 class="box-heading">
-                    <div class="btn-group pull-right">
-                        <a href="#" role="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon ion-ios7-arrow-down"></i>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a class="form-theme" data-toggle="default" href="#">Default</a></li>
-                            <li><a class="form-theme" data-toggle="flat" href="#">Flat</a></li>
-                            <li><a class="form-theme" data-toggle="ion" href="#">Ion</a></li>
-                            <li class="divider"></li>
-                            <li><a class="form-theme" data-toggle="flat-ion" href="#">Flat & Ion</a></li>
-                        </ul>
-                    </div>
-                    Customer Edit
-                </h2>
-
+                {% include 'partials/admin/box_heading.html.twig' with {'box_heading_title': 'Customer Edit'} %}
                 {{ form_start(edit_form, {'attr': {'class': 'form-validate form-horizontal', 'novalidate': 'novalidate', 'role': 'form'}}) }}
                     {{ form_widget(edit_form._token) }}
                     {% set _class = 'form-group' %}

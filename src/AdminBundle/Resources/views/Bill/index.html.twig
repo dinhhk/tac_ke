@@ -3,18 +3,7 @@
     <div class="app-body">
         <div class="magic-layout">
             <div id="panel" class="panel panel-default magic-element width-full">
-                <div class="panel-heading">
-                    <div class="panel-icon"><i class="icon ion-ios7-upload-outline"></i></div>
-                    <div class="panel-actions">
-                        <a role="button" data-refresh="#panel" title="refresh" class="btn btn-sm btn-icon">
-                            <i class="icon ion-refresh"></i>
-                        </a>
-                        <a role="button" data-expand="#panel" title="expand" class="btn btn-sm btn-icon">
-                            <i class="icon ion-arrow-resize"></i>
-                        </a>
-                    </div><!-- /panel-actions -->
-                    <h3 class="panel-title">Bill list</h3>
-                </div><!-- /panel-heading -->
+                {% include 'partials/admin/panel_heading.html.twig' with {'panel_heading_title': 'Bill list'} %}
                 <div class="table-responsive">
                     <table class="table table-hover datatables">
                         <thead>
