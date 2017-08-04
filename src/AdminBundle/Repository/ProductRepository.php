@@ -13,9 +13,8 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 	public function byId($id) {
 		$results = array();
 		if($id) {
-			$query = $this->createQueryBuilder()
+			$query = $this->createQueryBuilder('p')
 	            ->select('p')
-	            ->from('AppBundle:Product', 'p')
 	            ->where('p.id = :id')
 	            ->setParameter('id', $id)
 	            ->getQuery();

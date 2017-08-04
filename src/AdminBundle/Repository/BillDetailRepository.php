@@ -31,5 +31,40 @@ class BillDetailRepository extends \Doctrine\ORM\EntityRepository
         return $results;
 	}
 
-	
+	public function getTotalQuantityNotVerifiedByDateProductId($id_product) {
+		$results = array();
+		if($id_product) {
+			$query = $this->createQueryBuilder('bd')
+	            ->select('SUM(bd.quantity) as total_quantity')
+	            ->innerJoin('bd.bill', 'b')
+	            ->where('b.verified = :verified')
+	            ->andwhere('bd.product = :id_product')
+	            ->setParameters(
+	            	array(
+	            		':verified' => 0,
+	            		':id_product' => $id_product,
+	            	)
+	            )
+	            ->getQuery();
+
+	        $results = $query->getOneOrNullResult();	
+		}
+		
+        return $results;
+	}
+
+	public function getTotalPrice($id) {
+		$results = array();
+		if($id) {
+			$query = $this->createQueryBuilder('bd')
+	            ->select('SUM(bd.quantity*bd.unitPrice) as total')
+	            ->where('bd.bill = :id')
+	            ->setParameter(':id', $id)
+	            ->getQuery();
+
+	        $results = $query->getSingleScalarResult();	
+		}
+		
+        return $results;
+	}
 }

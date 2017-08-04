@@ -109,7 +109,11 @@ class BillController extends Controller
             return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
         }
 
+        $bill->setTmpInventoryWait($request->request->get('product_inventory_wait'));
+        $bill->setTmpInventory($request->request->get('product_inventory'));
+        $bill->setTmpCostPrice($request->request->get('product_cost_price'));
         $editForm->handleRequest($request);
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -119,7 +123,7 @@ class BillController extends Controller
 
             return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
         }
-
+        
         return $this->render('AdminBundle:Bill:edit.html.twig', array(
             'bill' => $bill,
             'edit_form' => $editForm->createView(),

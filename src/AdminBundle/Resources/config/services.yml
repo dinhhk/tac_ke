@@ -12,13 +12,27 @@ services:
       tags:
         - { name: twig.extension }
 
-    admin.listener.core_listener:
-        class: AdminBundle\EventListener\CoreListener
+    admin.listener.import_listener:
+        class: AdminBundle\EventListener\ImportListener
         tags:
             - { name: doctrine.event_listener, event: postPersist, method: postPersist }
             - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
             - { name: doctrine.event_listener, event: postRemove, method: postRemove }
-            
+    
+    admin.validator.quantity_validator:
+        class: AdminBundle\Validator\Constraints\QuantityNotOverInventoryValidator
+        arguments: ["@request_stack"]
+        tags:
+            - { name: validator.constraint_validator, alias: quantity_not_over_inventory } 
+
+    admin.validator.unit_price_validator:
+        class: AdminBundle\Validator\Constraints\UnitPriceOverCostPriceValidator
+        tags:
+            - { name: validator.constraint_validator, alias: unit_price_over_cost_price }
+
+    admin.util.bill_util:
+        class: AdminBundle\Util\BillUtil
+        arguments: ["@doctrine.orm.entity_manager"]
 
     # admin.listener.import_listener:
     #     class: AdminBundle\EventListener\ImportListener

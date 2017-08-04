@@ -103,6 +103,20 @@ class Product
     private $promoPrice;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="cost_price", type="float", nullable=true)
+     */
+    private $costPrice;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="inventory", type="float", nullable=true)
+     */
+    private $inventory;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -562,5 +576,53 @@ class Product
     {
         $file_path = $fileName;
         if(file_exists($file_path)) unlink($file_path);
+    }
+
+    /**
+     * Set costPrice
+     *
+     * @param float $costPrice
+     *
+     * @return Product
+     */
+    public function setCostPrice($costPrice)
+    {
+        $this->costPrice = $costPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get costPrice
+     *
+     * @return float
+     */
+    public function getCostPrice()
+    {
+        return $this->costPrice;
+    }
+
+    /**
+     * Set inventory
+     *
+     * @param float $inventory
+     *
+     * @return Product
+     */
+    public function setInventory($inventory)
+    {
+        $this->inventory = $inventory;
+
+        return $this;
+    }
+
+    /**
+     * Get inventory
+     *
+     * @return float
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
     }
 }

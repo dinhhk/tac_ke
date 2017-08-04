@@ -93,6 +93,24 @@ class Bill
     private $action;
 
     /**
+     * @var String
+     *
+     */
+    private $tmpInventory;
+
+    /**
+     * @var String
+     *
+     */
+    private $tmpInventoryWait;
+
+    /**
+     * @var String
+     *
+     */
+    private $tmpCostPrice;
+
+    /**
      * Get id
      *
      * @return int
@@ -270,6 +288,75 @@ class Bill
     }
 
     /**
+     * Set tmpInventory
+     *
+     * @param string $tmpInventory
+     *
+     */
+    public function setTmpInventory($tmpInventory)
+    {
+        $this->tmpInventory = $tmpInventory;
+
+        return $this;
+    }
+
+    /**
+     * Get tmpInventory
+     *
+     * @return string
+     */
+    public function getTmpInventory()
+    {
+        return $this->tmpInventory;
+    }
+
+    /**
+     * Set tmpInventoryWait
+     *
+     * @param string $tmpInventoryWait
+     *
+     */
+    public function setTmpInventoryWait($tmpInventoryWait)
+    {
+        $this->tmpInventoryWait = $tmpInventoryWait;
+
+        return $this;
+    }
+
+    /**
+     * Get tmpInventoryWait
+     *
+     * @return string
+     */
+    public function getTmpInventoryWait()
+    {
+        return $this->tmpInventoryWait;
+    }
+
+    /**
+     * Set tmpCostPrice
+     *
+     * @param string $tmpCostPrice
+     *
+     */
+    public function setTmpCostPrice($tmpCostPrice)
+    {
+        $this->tmpCostPrice = $tmpCostPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get tmpCostPrice
+     *
+     * @return string
+     */
+    public function getTmpCostPrice()
+    {
+        return $this->tmpCostPrice;
+    }
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -287,7 +374,7 @@ class Bill
     public function addBillDetail(\AdminBundle\Entity\BillDetail $billDetail)
     {
         if(count($this->bill_details) > 0) {
-            $curr_product_id = ($bill_details->getProduct()) ? $bill_details->getProduct()->getId() : '';
+            $curr_product_id = ($billDetail->getProduct()) ? $billDetail->getProduct()->getId() : '';
             foreach($this->bill_details as $_bill_detail) {
                 $prev_product_id = $_bill_detail->getProduct()->getId();
                 if($prev_product_id == $curr_product_id) {

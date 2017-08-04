@@ -45,4 +45,24 @@ class ImportDetailRepository extends EntityRepository
 		
         return $results;
 	}
+
+	public function getCostPriceByProductId($id_product) {
+		if($id_product) {
+			$query = $this->createQueryBuilder('ipd')
+	            ->select('ipd.unitPrice as cost_price')
+	            ->andWhere('ipd.product = :id_product')
+	            ->setParameters(
+	            	array(
+	            		':id_product' => $id_product,
+	            	)
+	            )
+	            ->orderBy('ipd.updatedAt', 'DESC')
+				->setMaxResults(1)
+	            ->getQuery();
+
+	    	return $query->getOneOrNullResult();	
+		}
+			
+		return FALSE;
+	}
 }

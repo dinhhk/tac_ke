@@ -33,4 +33,27 @@ class CoreRepository extends \Doctrine\ORM\EntityRepository
 			
 		return FALSE;
 	}
+
+	public function getInventoryByYMProductId($year, $month, $id_product) {
+		if($year && $month && $id_product) {
+			$query = $this->createQueryBuilder('c')
+	            ->select('sum(c.tondk) + sum(c.nhaptk) - sum(c.xuattk) as inventory')
+	            ->where('c.year = :year')
+	            ->andWhere('c.month = :month')
+	            ->andWhere('c.product = :id_product')
+	            ->groupBy('c.product')
+	            ->setParameters(
+	            	array(
+	            		':year' => $year,
+	            		':month' => $month,
+	            		':id_product' => $id_product,
+	            	)
+	            )
+	            ->getQuery();
+
+	    	return $query->getOneOrNullResult();	
+		}
+			
+		return FALSE;
+	}
 }	

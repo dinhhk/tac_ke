@@ -191,19 +191,17 @@ class ProductController extends Controller
         if($request->isXmlHttpRequest()) {
             $id = $request->request->get('id');
             $em = $this->getDoctrine()->getManager();
-            $query = $em->createQueryBuilder()
-                ->select('p')
-                ->from('AdminBundle:Product', 'p')
-                ->where('p.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery();
-            $results = $query->getArrayResult();
-            $product = isset($results[0]) && !empty($results[0]) ? $results[0] : '';
+
+            $rs_product = $em->getRepository('AdminBundle:Product')->byId($id);
+            $product = isset($rs_product[0]) && !empty($rs_product[0]) ? $rs_product[0] : '';
+            $rs_billDetail = $em->getRepository('AdminBundle:BillDetail')->getTotalQuantityNotVerifiedByDateProductId($id);
+            $inventory_wait_verify = isset($rs_billDetail['total_quantity']) && !empty($rs_billDetail['total_quantity']) ? $rs_billDetail['total_quantity'] : 0;
+
             $status = FALSE;
             if($product) {
                 $status = TRUE;
             }
-            return new Response(json_encode(['status' => $status, 'product' => $product]), 200, array('Content-Type' => 'application/json'));
+            return new Response(json_encode(['status' => $status, 'product' => $product, 'inventory_wait_verify' => $inventory_wait_verify]), 200, array('Content-Type' => 'application/json'));
         }
     }
 }

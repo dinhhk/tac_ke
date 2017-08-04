@@ -5,6 +5,7 @@ namespace AdminBundle\Controller;
 use AdminBundle\Entity\BillDetail;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Billdetail controller.
@@ -42,7 +43,7 @@ class BillDetailController extends Controller
             $em->persist($billDetail);
             $em->flush();
 
-            return $this->redirectToRoute('billdetail_show', array('id' => $billDetail->getId()));
+            return $this->redirectToRoute('bill_detail_show', array('id' => $billDetail->getId()));
         }
 
         return $this->render('AdminBundle:BillDetail:new.html.twig', array(
@@ -78,7 +79,7 @@ class BillDetailController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('billdetail_edit', array('id' => $billDetail->getId()));
+            return $this->redirectToRoute('bill_detail_edit', array('id' => $billDetail->getId()));
         }
 
         return $this->render('AdminBundle:BillDetail:edit.html.twig', array(
@@ -96,23 +97,24 @@ class BillDetailController extends Controller
     {
         $form = $this->createDeleteForm($billDetail);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($billDetail);
             $em->flush();
-
+                
             if($request->isXMLHttpRequest())
             {
+                $bill_id = $request->get('billDetail')->getBill()->getId();
+                $total = $this->container->get('admin.util.bill_util')->updateTotalPrice($bill_id);
                 return new Response(
-                    json_encode(array('removed' => 1, 'message' => 'Bill detail has been deleted.')),
+                    json_encode(array('removed' => 1, 'message' => 'Bill detail has been deleted.', 'total' => $total)),
                     200,
                     array('Content-Type' => 'application/json')
                 );
             }
         }
 
-        return $this->redirectToRoute('billdetail_index');
+        return $this->redirectToRoute('bill_detail_index');
     }
 
     /**
@@ -125,7 +127,7 @@ class BillDetailController extends Controller
     private function createDeleteForm(BillDetail $billDetail)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('billdetail_delete', array('id' => $billDetail->getId())))
+            ->setAction($this->generateUrl('bill_detail_delete', array('id' => $billDetail->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

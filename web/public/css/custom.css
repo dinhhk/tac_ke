@@ -30,3 +30,7 @@ tr.table-hover-highlighted td {
 .table-hover.verified>tbody>tr:hover>th {
   background-color: transparent;
 }
+
+.row.row-mb-5 {
+	margin-bottom: 5px
+}

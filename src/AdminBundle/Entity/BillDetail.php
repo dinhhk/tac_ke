@@ -4,7 +4,8 @@ namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use AdminBundle\Validator\Constraints\QuantityNotOverInventory;
+use AdminBundle\Validator\Constraints\UnitPriceOverCostPrice;
 /**
  * BillDetail
  *
@@ -41,6 +42,7 @@ class BillDetail
      *
      * @ORM\Column(name="quantity", type="float")
      * @Assert\NotBlank()
+     * @QuantityNotOverInventory()
      */
     private $quantity;
 
@@ -49,6 +51,7 @@ class BillDetail
      *
      * @ORM\Column(name="unit_price", type="float")
      * @Assert\NotBlank()
+     * @UnitPriceOverCostPrice()
      */
     private $unitPrice;
 
@@ -65,7 +68,6 @@ class BillDetail
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
 
     /**
      * Get id

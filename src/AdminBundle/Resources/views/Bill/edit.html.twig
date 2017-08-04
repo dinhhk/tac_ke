@@ -16,105 +16,139 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    <div class="col-md-6">
-                                        <label for="ccustomer">Customer <span class="required">*</span></label>
-                                        <div class="input-group" style="margin-left: 0px">
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-6">
+                                            <label for="ccustomer">Customer <span class="required">*</span></label>
+                                            <div class="input-group" style="margin-left: 0px">
+                                                {% set _class = 'form-control' %}
+                                                {% if not edit_form.customer.vars.valid %}
+                                                    {% set _class = 'form-control error' %}
+                                                {% endif %}
+                                                {{ form_widget(edit_form.customer, {'attr': {'class': _class, 'disabled': 'disabled'}}) }}
+                                                <div class="input-group-addon">
+                                                    <span class="icon ion-ios7-plus-empty"></span>
+                                                </div>
+                                            </div>
+
+                                            {{ form_errors(edit_form.customer) }}
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="cproduct">Product <span class="required">*</span></label>
+                                            
+                                            <div class="input-group">
+                                                {% set _class = 'form-control form-flat' %}
+                                                {% if edit_form.bill_details.__name__.product.vars.valid is defined and edit_form.bill_details.__name__.product.vars.valid == FALSE %}
+                                                    {% set _class = 'form-control error' %}
+                                                {% endif %}
+                                                {% if edit_form.bill_details.children.__name__.product is defined %}
+                                                    {{ form_widget(edit_form.bill_details.children.__name__.product, {'attr': {'class': _class}}) }}
+                                                {% else %}
+                                                    {{ form_widget(edit_form.bill_details.vars.prototype.product, {'attr': {'class': _class}}) }}
+                                                {% endif %}
+                                                <div class="input-group-addon">
+                                                    <span class="icon ion-ios7-plus-empty"></span>
+                                                </div>
+                                            </div>
+
+                                            {% if edit_form.bill_details.__name__.product is defined %}
+                                                {{ form_errors(edit_form.bill_details.__name__.product) }} 
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-2">
+                                            <label for="product_inventory">Inventory</label>
+                                            <input id="product_inventory" name="product_inventory" class="form-control" type="text" readonly="readonly" style="margin-left: 0px">
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label for="product_inventory_wait">Wait</label>
+                                            <input id="product_inventory_wait" name="product_inventory_wait" class="form-control" type="text" readonly="readonly">
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label for="product_inventory_verified">Verified</label>
+                                            <input id="product_inventory_verified" name="product_inventory_verified" class="form-control" type="text" readonly="readonly">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="product_cost_price">Cost Price</label>
+                                            <input id="product_cost_price" name="product_cost_price" class="form-control" type="text" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-4">
+                                            <label for="cquantity">Quantity <span class="required">*</span></label>
+                                            <div class="input-group" style="margin-left: 0px">
+                                                {% set _class = 'form-control number-input quantity' %}
+                                                {% if edit_form.bill_details.__name__.quantity.vars.valid is defined and edit_form.bill_details.__name__.quantity.vars.valid == FALSE %}
+                                                    {% set _class = 'form-control number-input quantity error' %}
+                                                {% endif %}
+                                                {% if edit_form.bill_details.children.__name__.quantity is defined %}
+                                                    {{ form_widget(edit_form.bill_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
+                                                {% else %}
+                                                    {{ form_widget(edit_form.bill_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
+                                                {% endif %}
+
+                                                {% if edit_form.bill_details.__name__.quantity is defined %}
+                                                    {{ form_errors(edit_form.bill_details.__name__.quantity) }} 
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="cunitPrice">Unit Price <span class="required">*</span></label>
+                                            <div class="input-group">
+                                                {% set _class = 'form-control number-input unit-price' %}
+                                                {% if edit_form.bill_details.__name__.unitPrice.vars.valid is defined and edit_form.bill_details.__name__.unitPrice.vars.valid == FALSE %}
+                                                    {% set _class = 'form-control number-input unit-price error' %}
+                                                {% endif %}
+                                                {% if edit_form.bill_details.children.__name__.unitPrice is defined %}
+                                                    {{ form_widget(edit_form.bill_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
+                                                {% else %}
+                                                    {{ form_widget(edit_form.bill_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
+                                                {% endif %}
+                                                
+                                                {% if edit_form.bill_details.__name__.unitPrice is defined %}
+                                                    {{ form_errors(edit_form.bill_details.__name__.unitPrice) }} 
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="admin_bill_price">Total</label>
+                                            <input id="admin_bill_price" name="admin_bill_price" class="form-control" type="text" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-6">
+                                            {{ form_label(edit_form.note, 'Note') }}
+                                            {{ form_widget(edit_form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3, 'readonly': 'readonly', 'style': "margin-left: 0px"}}) }}
+                                            {{ form_errors(edit_form.note) }}
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            {{ form_label(edit_form.payment, 'Payment') }}
+                                            {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly', 'style': "margin-left: 0px"}}) }}
+                                            {{ form_errors(edit_form.payment) }}
+                                        </div> 
+                                    </div>
+                                       
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-12 hidden">
+                                            {{ form_label(edit_form.total, 'Total') }}
                                             {% set _class = 'form-control' %}
-                                            {% if not edit_form.customer.vars.valid %}
+                                            {% if not edit_form.total.vars.valid %}
                                                 {% set _class = 'form-control error' %}
                                             {% endif %}
-                                            {{ form_widget(edit_form.customer, {'attr': {'class': _class, 'disabled': 'disabled'}}) }}
-                                            <div class="input-group-addon">
-                                                <span class="icon ion-ios7-plus-empty"></span>
-                                            </div>
-                                        </div>
-
-                                        {{ form_errors(edit_form.customer) }}
+                                            {{ form_widget(edit_form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
+                                            {{ form_errors(edit_form.total) }}
+                                        </div>  
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <label for="cproduct">Product <span class="required">*</span></label>
-                                        
-                                        <div class="input-group">
-                                            {% set _class = 'form-control form-flat' %}
-                                            {% if edit_form.bill_details.__name__.product.vars.valid is defined and edit_form.bill_details.__name__.product.vars.valid == FALSE %}
-                                                {% set _class = 'form-control error' %}
-                                            {% endif %}
-                                            {% if edit_form.bill_details.children.__name__.product is defined %}
-                                                {{ form_widget(edit_form.bill_details.children.__name__.product, {'attr': {'class': _class}}) }}
-                                            {% else %}
-                                                {{ form_widget(edit_form.bill_details.vars.prototype.product, {'attr': {'class': _class}}) }}
-                                            {% endif %}
-                                            <div class="input-group-addon">
-                                                <span class="icon ion-ios7-plus-empty"></span>
-                                            </div>
-                                        </div>
-
-                                        {% if edit_form.bill_details.__name__.product is defined %}
-                                            {{ form_errors(edit_form.bill_details.__name__.product) }} 
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label for="cquantity">Quantity <span class="required">*</span></label>
-                                        {% set _class = 'form-control number-input quantity' %}
-                                        {% if edit_form.bill_details.__name__.quantity.vars.valid is defined and edit_form.bill_details.__name__.quantity.vars.valid == FALSE %}
-                                            {% set _class = 'form-control number-input quantity error' %}
-                                        {% endif %}
-                                        {% if edit_form.bill_details.children.__name__.quantity is defined %}
-                                            {{ form_widget(edit_form.bill_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
-                                        {% else %}
-                                            {{ form_widget(edit_form.bill_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
-                                        {% endif %}
-
-                                        {% if edit_form.bill_details.__name__.quantity is defined %}
-                                            {{ form_errors(edit_form.bill_details.__name__.quantity) }} 
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label for="cunitPrice">Unit Price <span class="required">*</span></label>
-                                        {% set _class = 'form-control number-input unit-price' %}
-                                        {% if edit_form.bill_details.__name__.unitPrice.vars.valid is defined and edit_form.bill_details.__name__.unitPrice.vars.valid == FALSE %}
-                                            {% set _class = 'form-control number-input unit-price error' %}
-                                        {% endif %}
-                                        {% if edit_form.bill_details.children.__name__.unitPrice is defined %}
-                                            {{ form_widget(edit_form.bill_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
-                                        {% else %}
-                                            {{ form_widget(edit_form.bill_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
-                                        {% endif %}
-                                        
-                                        {% if edit_form.bill_details.__name__.unitPrice is defined %}
-                                            {{ form_errors(edit_form.bill_details.__name__.unitPrice) }} 
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label for="admin_bill_price">Total</label>
-                                        <input id="admin_bill_price" name="admin_bill_price" class="form-control" type="text" readonly="readonly">
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {{ form_label(edit_form.note, 'Note') }}
-                                        {{ form_widget(edit_form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3, 'readonly': 'readonly'}}) }}
-                                        {{ form_errors(edit_form.note) }}
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {{ form_label(edit_form.payment, 'Payment') }}
-                                        {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly'}}) }}
-                                        {{ form_errors(edit_form.payment) }}
-                                    </div>    
-
-                                    <div class="col-md-12 hidden">
-                                        {{ form_label(edit_form.total, 'Total') }}
-                                        {% set _class = 'form-control' %}
-                                        {% if not edit_form.total.vars.valid %}
-                                            {% set _class = 'form-control error' %}
-                                        {% endif %}
-                                        {{ form_widget(edit_form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
-                                        {{ form_errors(edit_form.total) }}
-                                    </div>            
                                 </div>
                       
                                 <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:20px">
@@ -145,8 +179,8 @@
                             <div class="panel-icon"><i class="icon ion-navicon-round"></i></div>
                             <div class="panel-actions">
                                 <div class="input-group">
-                                    <strong>TOTAL PRICE:</strong> <span class="text-info">{{ edit_form.vars.value.total|number_format(0, '.', ',') }} VNĐ </span> | 
-                                    <strong>TOTAL ROWS:</strong> <span class="text-info">{{ pagination.getTotalItemCount }}</span>
+                                    <strong>TOTAL PRICE:</strong> <span class="text-info total">{{ edit_form.vars.value.total|number_format(0, '.', ',') }} VNĐ </span> | 
+                                    <strong>TOTAL ROWS:</strong> <span class="text-info rows">{{ pagination.getTotalItemCount }}</span>
                                 </div>
                             </div><!-- /panel-actions -->
                             <h3 class="panel-title">Bill Details</h3>
@@ -226,15 +260,15 @@
 {{ parent() }}
 <script src="{{ asset('public/assets/bootbox/bootbox.js') }}"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        addImageByAjax();
+    $(document).ready(function() { 
+        addProductInfoByAjax();
     });
 
     $( "#admin_bill_bill_details___name___product" ).change(function() {
-        addImageByAjax();
+        addProductInfoByAjax();
     });
 
-    function addImageByAjax() {
+    function addProductInfoByAjax() {
         var id = $("#admin_bill_bill_details___name___product option:selected").val();
         $.ajax({
             url: "/admin/product/info",
@@ -243,8 +277,15 @@
             dataType: 'json',
             success: function(data) {
                 if(data.status == 1) {
-                    var image = !data.product.image ? 'https://www.oatey.com/ASSETS/IMAGES/ITEMS/DETAIL_PAGE/NoImage.png' : '/' + data.product.image;
+                    var image = data.product.image ? '/' + data.product.image : 'https://www.oatey.com/ASSETS/IMAGES/ITEMS/DETAIL_PAGE/NoImage.png';
+                    var inventory = data.product.inventory ? data.product.inventory : 0;
+                    var costPrice = data.product.costPrice ? data.product.costPrice : 0;
                     $('#product_image').attr('src', image);
+                    $('#product_inventory').attr('value', inventory);
+                    $('#product_cost_price').attr('value', costPrice);
+                    $('#product_inventory_wait').attr('value', data.inventory_wait_verify);
+                    var inventory_verified = inventory - data.inventory_wait_verify;
+                    $('#product_inventory_verified').attr('value', inventory_verified);
                 }
             },
             error: function (xhr, status, error) {
@@ -318,12 +359,17 @@
                         var id = row.data('bill-detail-id');                
                         var form = $('#form-delete');                
                         var url = form.attr('action').replace(':BILL_DETAIL_ID', id);
-                        var data = form.serialize();                        
+                        var data = form.serialize();                                    
                         $.post(url, data, function(result){
                             var status = result.removed;
                             if(status == 1)
                             {
                                 row.fadeOut();  
+                                addProductInfoByAjax();
+                                var total = result.total;
+                                var rows = $('.text-info.rows').text() - 1;
+                                $('.text-info.total').text(total.toLocaleString('en') + ' VNĐ');
+                                $('.text-info.rows').text(rows.toLocaleString('en'));
                             }
                         }).fail(function(xhr, status, error){
                             console.log(xhr.responseText);

@@ -5,7 +5,6 @@ $(document).ready(function(){
         var row = $(this).parents('tr');
 
         var type_id = row.data('type_id');
-        alert(1111111111);exit;
         var form = $('#form-delete');
         
         if(type_id) {
