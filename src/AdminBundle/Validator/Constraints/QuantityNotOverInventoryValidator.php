@@ -47,7 +47,9 @@ class QuantityNotOverInventoryValidator extends ConstraintValidator
             $exists_quantity = $this->context->getObject()->getQuantity();
 
             $compare_value = 0;
-            if($input_quantity != $exists_quantity) {
+            $action = $this->context->getRoot()->getData()->getAction();
+            if($input_quantity != $exists_quantity || $action == 'update') {
+
                 $compare_value = $value;
             } else {
                 $inventory_wait = (float) $this->context->getRoot()->getData()->getTmpInventoryWait();

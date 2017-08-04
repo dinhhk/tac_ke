@@ -27,6 +27,7 @@ services:
 
     admin.validator.unit_price_validator:
         class: AdminBundle\Validator\Constraints\UnitPriceOverCostPriceValidator
+        arguments: ["@request_stack"]
         tags:
             - { name: validator.constraint_validator, alias: unit_price_over_cost_price }
 
