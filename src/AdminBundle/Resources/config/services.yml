@@ -34,6 +34,10 @@ services:
         class: AdminBundle\Util\BillUtil
         arguments: ["@doctrine.orm.entity_manager"]
 
+    admin.util.import_util:
+        class: AdminBundle\Util\ImportUtil
+        arguments: ["@doctrine.orm.entity_manager"]
+
     # admin.listener.import_listener:
     #     class: AdminBundle\EventListener\ImportListener
     #     arguments: ["@service_container"]

@@ -3,6 +3,7 @@
     <div class="app-body">
         <div class="magic-layout">
             <div class="box magic-element width-full">
+                {% include 'partials/admin/messages.html.twig' %}
                 {% include 'partials/admin/box_heading.html.twig' with {'box_heading_title': 'Import Edit'} %}
                 {% set _disabled = '' %}
                 {% set _verified = '' %}
@@ -15,108 +16,119 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    <div class="col-md-6">
-                                        {{ form_label(edit_form.provider, 'Provider') }}
-                                        
-                                        <div class="input-group" style="margin-left: 0px">
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-6">
+                                            {{ form_label(edit_form.provider, 'Provider') }}
+                                            
+                                            <div class="input-group" style="margin-left: 0px">
+                                                {% set _class = 'form-control' %}
+                                                {% if not edit_form.provider.vars.valid %}
+                                                    {% set _class = 'form-control error' %}
+                                                {% endif %}
+                                                {{ form_widget(edit_form.provider, {'attr': {'class': _class, 'disabled': 'disabled'}}) }}
+                                                <div class="input-group-addon">
+                                                    <span class="icon ion-ios7-plus-empty"></span>
+                                                </div>
+                                            </div>
+
+                                            {{ form_errors(edit_form.provider) }}
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            {{ form_label(edit_form.import_details.vars.prototype.product, 'Product') }}
+                                            
+                                            <div class="input-group">
+                                                {% set _class = 'form-control form-flat' %}
+                                                {% if edit_form.import_details.__name__.product.vars.valid is defined and edit_form.import_details.__name__.product.vars.valid == FALSE %}
+                                                    {% set _class = 'form-control error' %}
+                                                {% endif %}
+                                                {% if edit_form.import_details.children.__name__.product is defined %}
+                                                    {{ form_widget(edit_form.import_details.children.__name__.product, {'attr': {'class': _class}}) }}
+                                                {% else %}
+                                                    {{ form_widget(edit_form.import_details.vars.prototype.product, {'attr': {'class': _class}}) }}
+                                                {% endif %}
+                                                <div class="input-group-addon">
+                                                    <span class="icon ion-ios7-plus-empty"></span>
+                                                </div>
+                                            </div>
+
+                                            {% if edit_form.import_details.__name__.product is defined %}
+                                                {{ form_errors(edit_form.import_details.__name__.product) }} 
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-4">
+                                            {{ form_label(edit_form.import_details.vars.prototype.quantity, 'Quantity') }}
+                                            <div class="input-group" style="margin-left: 0px">
+                                                {% set _class = 'form-control number-input quantity' %}
+                                                {% if edit_form.import_details.__name__.quantity.vars.valid is defined and edit_form.import_details.__name__.quantity.vars.valid == FALSE %}
+                                                    {% set _class = 'form-control number-input quantity error' %}
+                                                {% endif %}
+                                                {% if edit_form.import_details.children.__name__.quantity is defined %}
+                                                    {{ form_widget(edit_form.import_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
+                                                {% else %}
+                                                    {{ form_widget(edit_form.import_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
+                                                {% endif %}
+
+                                                {% if edit_form.import_details.__name__.quantity is defined %}
+                                                    {{ form_errors(edit_form.import_details.__name__.quantity) }} 
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            {{ form_label(edit_form.import_details.vars.prototype.unitPrice, 'Unit Price') }}
+                                            <div class="input-group">
+                                                {% set _class = 'form-control number-input unit-price' %}
+                                                {% if edit_form.import_details.__name__.unitPrice.vars.valid is defined and edit_form.import_details.__name__.unitPrice.vars.valid == FALSE %}
+                                                    {% set _class = 'form-control number-input unit-price error' %}
+                                                {% endif %}
+                                                {% if edit_form.import_details.children.__name__.unitPrice is defined %}
+                                                    {{ form_widget(edit_form.import_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
+                                                {% else %}
+                                                    {{ form_widget(edit_form.import_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
+                                                {% endif %}
+                                                
+                                                {% if edit_form.import_details.__name__.unitPrice is defined %}
+                                                    {{ form_errors(edit_form.import_details.__name__.unitPrice) }} 
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="admin_import_price">Total</label>
+                                            <input id="admin_import_price" name="admin_import_price" class="form-control" type="text" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-6">
+                                            {{ form_label(edit_form.note, 'Note') }}
+                                            {{ form_widget(edit_form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3, 'readonly': 'readonly', 'style': "margin-left: 0px"}}) }}
+                                            {{ form_errors(edit_form.note) }}
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            {{ form_label(edit_form.payment, 'Payment') }}
+                                            {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly'}}) }}
+                                            {{ form_errors(edit_form.payment) }}
+                                        </div>  
+                                    </div>
+                                      
+                                    <div class="row row-mb-5">
+                                        <div class="col-md-12 hidden">
+                                            {{ form_label(edit_form.total, 'Total') }}
                                             {% set _class = 'form-control' %}
-                                            {% if not edit_form.provider.vars.valid %}
+                                            {% if not edit_form.total.vars.valid %}
                                                 {% set _class = 'form-control error' %}
                                             {% endif %}
-                                            {{ form_widget(edit_form.provider, {'attr': {'class': _class, 'disabled': 'disabled'}}) }}
-                                            <div class="input-group-addon">
-                                                <span class="icon ion-ios7-plus-empty"></span>
-                                            </div>
-                                        </div>
-
-                                        {{ form_errors(edit_form.provider) }}
+                                            {{ form_widget(edit_form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
+                                            {{ form_errors(edit_form.total) }}
+                                        </div>  
                                     </div>
-
-                                    <div class="col-md-6">
-                                        {{ form_label(edit_form.import_details.vars.prototype.product, 'Product') }}
-                                        
-                                        <div class="input-group">
-                                            {% set _class = 'form-control form-flat' %}
-                                            {% if edit_form.import_details.__name__.product.vars.valid is defined and edit_form.import_details.__name__.product.vars.valid == FALSE %}
-                                                {% set _class = 'form-control error' %}
-                                            {% endif %}
-                                            {% if edit_form.import_details.children.__name__.product is defined %}
-                                                {{ form_widget(edit_form.import_details.children.__name__.product, {'attr': {'class': _class}}) }}
-                                            {% else %}
-                                                {{ form_widget(edit_form.import_details.vars.prototype.product, {'attr': {'class': _class}}) }}
-                                            {% endif %}
-                                            <div class="input-group-addon">
-                                                <span class="icon ion-ios7-plus-empty"></span>
-                                            </div>
-                                        </div>
-
-                                        {% if edit_form.import_details.__name__.product is defined %}
-                                            {{ form_errors(edit_form.import_details.__name__.product) }} 
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        {{ form_label(edit_form.import_details.vars.prototype.quantity, 'Quantity') }}
-
-                                        {% set _class = 'form-control number-input quantity' %}
-                                        {% if edit_form.import_details.__name__.quantity.vars.valid is defined and edit_form.import_details.__name__.quantity.vars.valid == FALSE %}
-                                            {% set _class = 'form-control number-input quantity error' %}
-                                        {% endif %}
-                                        {% if edit_form.import_details.children.__name__.quantity is defined %}
-                                            {{ form_widget(edit_form.import_details.children.__name__.quantity, {'attr': {'class': _class}}) }}
-                                        {% else %}
-                                            {{ form_widget(edit_form.import_details.vars.prototype.quantity, {'attr': {'class': _class}}) }}
-                                        {% endif %}
-
-                                        {% if edit_form.import_details.__name__.quantity is defined %}
-                                            {{ form_errors(edit_form.import_details.__name__.quantity) }} 
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        {{ form_label(edit_form.import_details.vars.prototype.unitPrice, 'Unit Price') }}
-                                        
-                                        {% set _class = 'form-control number-input unit-price' %}
-                                        {% if edit_form.import_details.__name__.unitPrice.vars.valid is defined and edit_form.import_details.__name__.unitPrice.vars.valid == FALSE %}
-                                            {% set _class = 'form-control number-input unit-price error' %}
-                                        {% endif %}
-                                        {% if edit_form.import_details.children.__name__.unitPrice is defined %}
-                                            {{ form_widget(edit_form.import_details.children.__name__.unitPrice, {'attr': {'class': _class}}) }}
-                                        {% else %}
-                                            {{ form_widget(edit_form.import_details.vars.prototype.unitPrice, {'attr': {'class': _class}}) }}
-                                        {% endif %}
-                                        
-                                        {% if edit_form.import_details.__name__.unitPrice is defined %}
-                                            {{ form_errors(edit_form.import_details.__name__.unitPrice) }} 
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label for="admin_import_price">Total</label>
-                                        <input id="admin_import_price" name="admin_import_price" class="form-control" type="text" readonly="readonly">
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {{ form_label(edit_form.note, 'Note') }}
-                                        {{ form_widget(edit_form.note, {'attr': {'class': 'form-control col-xs-12', 'rows': 3, 'readonly': 'readonly'}}) }}
-                                        {{ form_errors(edit_form.note) }}
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {{ form_label(edit_form.payment, 'Payment') }}
-                                        {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly'}}) }}
-                                        {{ form_errors(edit_form.payment) }}
-                                    </div>    
-
-                                    <div class="col-md-12 hidden">
-                                        {{ form_label(edit_form.total, 'Total') }}
-                                        {% set _class = 'form-control' %}
-                                        {% if not edit_form.total.vars.valid %}
-                                            {% set _class = 'form-control error' %}
-                                        {% endif %}
-                                        {{ form_widget(edit_form.total, {'attr': {'class': _class, 'readonly': 'readonly'}}) }}
-                                        {{ form_errors(edit_form.total) }}
-                                    </div>            
                                 </div>
                       
                                 <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:20px">
@@ -147,8 +159,8 @@
                             <div class="panel-icon"><i class="icon ion-navicon-round"></i></div>
                             <div class="panel-actions">
                                 <div class="input-group">
-                                    <strong>TOTAL PRICE:</strong> <span class="text-info">{{ edit_form.vars.value.total|number_format(0, '.', ',') }} VNĐ </span> | 
-                                    <strong>TOTAL ROWS:</strong> <span class="text-info">{{ pagination.getTotalItemCount }}</span>
+                                    <strong>TOTAL PRICE:</strong> <span class="text-info total">{{ edit_form.vars.value.total|number_format(0, '.', ',') }} VNĐ </span> | 
+                                    <strong>TOTAL ROWS:</strong> <span class="text-info rows">{{ pagination.getTotalItemCount }}</span>
                                 </div>
                             </div><!-- /panel-actions -->
                             <h3 class="panel-title">Import Details</h3>
@@ -229,14 +241,14 @@
 <script src="{{ asset('public/assets/bootbox/bootbox.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        addImageByAjax();
+        addProductInfoByAjax();
     });
 
     $( "#admin_import_import_details___name___product" ).change(function() {
-        addImageByAjax();
+        addProductInfoByAjax();
     });
 
-    function addImageByAjax() {
+    function addProductInfoByAjax() {
         var id = $("#admin_import_import_details___name___product option:selected").val();
         $.ajax({
             url: "/admin/product/info",
@@ -305,7 +317,7 @@
 
         $('form').submit(function(e) {
             $(':disabled').each(function(e) {
-                if(this.name != 'update') {
+                if($.inArray(this.id, ['add_import_detail', 'update_import_detail', 'reset_import_detail', 'verified_import_detail']) == -1) {
                     $(this).removeAttr('disabled');
                 }
             })
@@ -325,7 +337,13 @@
                             var status = result.removed;
                             if(status == 1)
                             {
-                                row.fadeOut();  
+                                //row.fadeOut();  
+                                //var total = parseInt(result.total);
+                                //var rows = parseInt($('.text-info.rows').text()) - 1;
+                                //$('.text-info.total').text(total.toLocaleString('en') + ' VNĐ');
+                                //$('.text-info.rows').text(rows.toLocaleString('en'));
+                                addProductInfoByAjax();
+                                location.reload();
                             }
                         }).fail(function(xhr, status, error){
                             console.log(xhr.responseText);

@@ -3,7 +3,8 @@
     <div class="app-body">
         <div class="magic-layout">
             <div id="panel" class="panel panel-default magic-element width-full">
-                {% include 'partials/admin/panel_heading.html.twig' with {'panel_heading_title': 'Import list'} %}
+                {% include 'partials/admin/messages.html.twig' %}
+                {% include 'partials/admin/panel_heading.html.twig' with {'panel_heading_title': 'Import list', 'class_icon': 'icon ion-ios7-download-outline'} %}
                 <div class="table-responsive">
                     <table class="table table-hover datatables">
                         <thead>

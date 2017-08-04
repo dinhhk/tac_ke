@@ -50,7 +50,7 @@ class UnitController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A unit have added successfully.');
+                    ->add('success', "A unit have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('unit_index', array('id' => $unit->getId()));
         }
@@ -90,7 +90,7 @@ class UnitController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A unit have updated successfully.');
+                    ->add('success', "A unit have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('unit_index', array('id' => $unit->getId()));
         }
@@ -117,7 +117,7 @@ class UnitController extends Controller
                 $em->flush();
                 $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A unit have deleted successfully.');
+                    ->add('success', "A unit have deleted successfully.");
             }    
         } else {
             $em->remove($unit);
@@ -125,7 +125,7 @@ class UnitController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A unit have deleted successfully.');
+                ->add('success', "A unit have deleted successfully.");
         }
 
         return $this->redirectToRoute('unit_index');

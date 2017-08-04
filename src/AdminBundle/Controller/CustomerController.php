@@ -44,7 +44,7 @@ class CustomerController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A customer have added successfully.');
+                ->add('success', "A customer have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('customer_index');
         }
@@ -84,7 +84,7 @@ class CustomerController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A customer have updated successfully.');
+                ->add('success', "A customer have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('customer_index');
         }
@@ -113,7 +113,7 @@ class CustomerController extends Controller
 
                 $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A customer have deleted successfully.');
+                    ->add('success', "A customer have <strong>deleted</strong> successfully.");
             }
         } else {
             $em->remove($customer);
@@ -121,7 +121,7 @@ class CustomerController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A product have deleted successfully.');
+                ->add('success', "A customer have <strong>deleted</strong> successfully.");
         }
         
         return $this->redirectToRoute('customer_index');

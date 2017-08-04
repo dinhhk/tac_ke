@@ -44,7 +44,7 @@ class ProviderController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A provider have added successfully.');
+                ->add('success', "A provider have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('provider_index');
         }
@@ -84,7 +84,7 @@ class ProviderController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A provider have updated successfully.');
+                ->add('success', "A provider have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('provider_index');
         }
@@ -113,7 +113,7 @@ class ProviderController extends Controller
 
                 $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A provider have deleted successfully.');
+                    ->add('success', "A provider have <strong>deleted</strong> successfully.");
             }
         } else {
             $em->remove($provider);
@@ -121,7 +121,7 @@ class ProviderController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A provider have deleted successfully.');
+                ->add('success', "A provider have <strong>deleted</strong> successfully.");
         }
 
         

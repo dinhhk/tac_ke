@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Bill
 {
     /**
-     * @ORM\OneToMany(targetEntity="BillDetail", mappedBy="bill", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="BillDetail", mappedBy="bill", cascade={"persist", "remove"})
      */
     private $bill_details;
 

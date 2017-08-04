@@ -49,7 +49,7 @@ class ProductController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A product have added successfully.');
+                    ->add('success', "A product have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('product_index');
         }
@@ -91,7 +91,7 @@ class ProductController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A product have updated successfully.');
+                    ->add('success', "A product have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('product_index');
         }
@@ -124,7 +124,7 @@ class ProductController extends Controller
 
                 $request->getSession()
                         ->getFlashBag()
-                        ->add('success', 'A product have deleted successfully.');
+                        ->add('success', "A product have <strong>deleted</strong> successfully.");
             }
         } else {
             $em->remove($product);
@@ -132,7 +132,7 @@ class ProductController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A product have deleted successfully.');
+                ->add('success', "A product have <strong>deleted</strong> successfully.");
         }
 
         return $this->redirectToRoute('product_index');

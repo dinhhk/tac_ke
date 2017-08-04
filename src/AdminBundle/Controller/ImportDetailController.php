@@ -102,10 +102,17 @@ class ImportDetailController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($importDetail);
             $em->flush();
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', "A import detail have <strong>deleted</strong> successfully.");
+
             if($request->isXMLHttpRequest())
             {
+                $import_id = $request->get('importDetail')->getImport()->getId();
+                $total = $this->container->get('admin.util.import_util')->updateTotalPrice($import_id);
                 return new Response(
-                    json_encode(array('removed' => 1, 'message' => 'Import detail has been deleted.')),
+                    json_encode(array('removed' => 1, 'message' => 'Import detail has been deleted.', 'total' => $total)),
                     200,
                     array('Content-Type' => 'application/json')
                 );

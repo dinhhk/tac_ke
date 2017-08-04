@@ -50,7 +50,7 @@ class TypeController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A type have added successfully.');
+                    ->add('success', "A type have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('type_index');
         }
@@ -90,7 +90,7 @@ class TypeController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A type have updated successfully.');
+                    ->add('success', "A type have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('type_index');
         }
@@ -119,7 +119,7 @@ class TypeController extends Controller
 
                 $request->getSession()
                         ->getFlashBag()
-                        ->add('success', 'A type have deleted successfully.');
+                        ->add('success', "A type have <strong>deleted</strong> successfully.");
             }
         } else {
             $em->remove($type);
@@ -127,7 +127,7 @@ class TypeController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A type have deleted successfully.');
+                ->add('success', "A type have <strong>deleted</strong> successfully.");
         }
 
         

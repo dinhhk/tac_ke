@@ -3,7 +3,8 @@
     <div class="app-body">
         <div class="magic-layout">
             <div id="panel" class="panel panel-default magic-element width-full">
-                {% include 'partials/admin/panel_heading.html.twig' with {'panel_heading_title': 'Bill list'} %}
+                {% include 'partials/admin/messages.html.twig' %}
+                {% include 'partials/admin/panel_heading.html.twig' with {'panel_heading_title': 'Bill list', 'class_icon': 'icon ion-ios7-upload-outline'} %}
                 <div class="table-responsive">
                     <table class="table table-hover datatables">
                         <thead>
@@ -11,7 +12,7 @@
                                 <th>#</th>
                                 <th>Bill ID</th>
                                 <th>Customer</th>
-                                <th>Date Order</th>
+                                <th>Verify</th>
                                 <th>Total</th>
                                 <th>Create At</th>
                                 <th>Updated At</th> 
@@ -26,15 +27,19 @@
                                     <td>{{ count }}</td>
                                     <td><a href="{{ path('bill_show', { 'id': bill.id }) }}">{{ bill.id|generateId() }}</a></td>
                                     <td>{{ bill.customer.name }}</td>
-                                    <td>{% if bill.dateOrder %}{{ bill.dateOrder|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    <td>{% if bill.verified == true %}
+                                        <img src="https://thumb9.shutterstock.com/display_pic_with_logo/436114/561785266/stock-vector-verified-stamp-sticker-seal-round-grunge-vintage-ribbon-verified-sign-561785266.jpg" width="45" height="40" />
+                                    {% endif %}</td>
                                     <td>{{ bill.total|number_format(0, '.', ',') }}</td>
                                     <td>{% if bill.createdAt %}{{ bill.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                                     <td>{% if bill.updatedAt %}{{ bill.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-ion btn-primary" href="{{ path('bill_new') }}">Add</a>
-                                            <a class="btn btn-ion btn-success" href="{{ path('bill_edit', { 'id': bill.id }) }}">Edit</a>
-                                            <a href="{{ path('bill_delete', {'id': bill.id }) }}" onclick="confirm('Are you sure?');" class="btn btn-ion btn-danger btn-delete">Delete</a>
+                                            {% if bill.verified == false %}
+                                                <a class="btn btn-ion btn-success" href="{{ path('bill_edit', { 'id': bill.id }) }}">Edit</a>
+                                                <a href="{{ path('bill_delete', {'id': bill.id }) }}" onclick="confirm('Are you sure?');" class="btn btn-ion btn-danger btn-delete">Delete</a>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>

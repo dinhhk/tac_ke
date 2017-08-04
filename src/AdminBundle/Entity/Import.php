@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Import
 {
     /**
-     * @ORM\OneToMany(targetEntity="ImportDetail", mappedBy="import", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ImportDetail", mappedBy="import", cascade={"persist", "remove"})
      */
     private $import_details;
 

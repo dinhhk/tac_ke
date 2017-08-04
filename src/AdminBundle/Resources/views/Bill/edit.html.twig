@@ -133,7 +133,7 @@
 
                                         <div class="col-md-6">
                                             {{ form_label(edit_form.payment, 'Payment') }}
-                                            {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly', 'style': "margin-left: 0px"}}) }}
+                                            {{ form_widget(edit_form.payment, {'attr': {'class': 'form-control', 'rows': 3, 'readonly': 'readonly'}}) }}
                                             {{ form_errors(edit_form.payment) }}
                                         </div> 
                                     </div>
@@ -280,11 +280,12 @@
                     var image = data.product.image ? '/' + data.product.image : 'https://www.oatey.com/ASSETS/IMAGES/ITEMS/DETAIL_PAGE/NoImage.png';
                     var inventory = data.product.inventory ? data.product.inventory : 0;
                     var costPrice = data.product.costPrice ? data.product.costPrice : 0;
+                    var inventory_verified = inventory - data.inventory_wait_verify;
+
                     $('#product_image').attr('src', image);
                     $('#product_inventory').attr('value', inventory);
                     $('#product_cost_price').attr('value', costPrice);
-                    $('#product_inventory_wait').attr('value', data.inventory_wait_verify);
-                    var inventory_verified = inventory - data.inventory_wait_verify;
+                    $('#product_inventory_wait').attr('value', data.inventory_wait_verify);                    
                     $('#product_inventory_verified').attr('value', inventory_verified);
                 }
             },
@@ -344,7 +345,7 @@
 
         $('form').submit(function(e) {
             $(':disabled').each(function(e) {
-                if(this.name != 'update') {
+                if($.inArray(this.id, ['add_bill_detail', 'update_bill_detail', 'reset_bill_detail', 'verified_bill_detail']) == -1) {
                     $(this).removeAttr('disabled');
                 }
             })
@@ -364,12 +365,13 @@
                             var status = result.removed;
                             if(status == 1)
                             {
-                                row.fadeOut();  
+                                // row.fadeOut();  
+                                // var total = parseInt(result.total);
+                                // var rows = parseInt($('.text-info.rows').text()) - 1;
+                                // $('.text-info.total').text(total.toLocaleString('en') + ' VNĐ');
+                                // $('.text-info.rows').text(rows.toLocaleString('en'));
                                 addProductInfoByAjax();
-                                var total = result.total;
-                                var rows = $('.text-info.rows').text() - 1;
-                                $('.text-info.total').text(total.toLocaleString('en') + ' VNĐ');
-                                $('.text-info.rows').text(rows.toLocaleString('en'));
+                                location.reload();
                             }
                         }).fail(function(xhr, status, error){
                             console.log(xhr.responseText);

@@ -21,4 +21,4 @@ bill_edit:
 bill_delete:
     path:     /{id}/delete
     defaults: { _controller: "AdminBundle:Bill:delete" }
-    methods:  DELETE
+    methods:  [GET, DELETE]

@@ -35,6 +35,10 @@ class BillController extends Controller
     {
         $bill = new Bill();
         $form = $this->createForm('AdminBundle\Form\BillType', $bill);
+        
+        $bill->setTmpInventoryWait($request->request->get('product_inventory_wait'));
+        $bill->setTmpInventory($request->request->get('product_inventory'));
+        $bill->setTmpCostPrice($request->request->get('product_cost_price'));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,7 +48,7 @@ class BillController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A bill have added successfully.');
+                ->add('success', "A bill have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
         }
@@ -119,7 +123,7 @@ class BillController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A bill have updated successfully.');
+                ->add('success', "A bill have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('bill_edit', array('id' => $bill->getId()));
         }
@@ -156,14 +160,14 @@ class BillController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A bill have deleted successfully.');
+                ->add('success', "A bill have <strong>deleted</strong> successfully.");
         } else {
             $em->remove($bill);
             $em->flush();
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A bill have deleted successfully.');
+                ->add('success', "A bill have <strong>deleted</strong> successfully.");
         }
 
         return $this->redirectToRoute('bill_index');

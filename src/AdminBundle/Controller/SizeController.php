@@ -64,7 +64,7 @@ class SizeController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A size have added successfully.');
+                    ->add('success', "A size have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('size_index', array('id' => $size->getId()));
         }
@@ -104,7 +104,7 @@ class SizeController extends Controller
 
             $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A size have updated successfully.');
+                    ->add('success', "A size have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('size_index', array('id' => $size->getId()));
         }
@@ -133,7 +133,7 @@ class SizeController extends Controller
 
                 $request->getSession()
                     ->getFlashBag()
-                    ->add('success', 'A size have deleted successfully.');
+                    ->add('success', "A size have <strong>deleted</strong> successfully.");
             } 
         } else {
             $em->remove($size);
@@ -141,7 +141,7 @@ class SizeController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A size have deleted successfully.');
+                ->add('success', "A size have <strong>deleted</strong> successfully.");
         }
         
 

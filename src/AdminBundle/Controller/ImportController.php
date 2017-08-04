@@ -47,7 +47,7 @@ class ImportController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A import have added successfully.');
+                ->add('success', "A import have <strong>added</strong> successfully.");
 
             return $this->redirectToRoute('import_edit', array('id' => $import->getId()));
         }
@@ -103,6 +103,15 @@ class ImportController extends Controller
         } elseif($request->request->has('update')) {
             $import->setAction('update');
         } elseif($request->request->has('verified')) {
+            $import_details = $import->getImportDetails();
+            if(count($import_details) == 0) {
+                $request->getSession()
+                ->getFlashBag()
+                ->add('error', 'The import detail is empty.');
+
+                return $this->redirectToRoute('import_edit', array('id' => $import->getId()));
+            }
+        
             $import->setAction('verified');
             $import->setVerified(1);
             
@@ -118,7 +127,7 @@ class ImportController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A import have updated successfully.');
+                ->add('success', "A import have <strong>updated</strong> successfully.");
 
             return $this->redirectToRoute('import_edit', array('id' => $import->getId()));
         }
@@ -156,14 +165,14 @@ class ImportController extends Controller
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A import have deleted successfully.');
+                ->add('success', "A import have <strong>deleted</strong> successfully.");
         } else {
             $em->remove($import);
             $em->flush();
 
             $request->getSession()
                 ->getFlashBag()
-                ->add('success', 'A import have deleted successfully.');
+                ->add('success', "A import have <strong>deleted</strong> successfully.");
         }
 
         return $this->redirectToRoute('import_index');

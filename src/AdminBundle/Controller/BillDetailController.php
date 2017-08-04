@@ -97,11 +97,16 @@ class BillDetailController extends Controller
     {
         $form = $this->createDeleteForm($billDetail);
         $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($billDetail);
             $em->flush();
                 
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', "A bill detail have <strong>deleted</strong> successfully.");
+
             if($request->isXMLHttpRequest())
             {
                 $bill_id = $request->get('billDetail')->getBill()->getId();
